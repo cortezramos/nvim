@@ -28,8 +28,6 @@ vim.opt.fillchars = {
 -- Esto le da un color sutil a los bordes para que resalten
 vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#7aa2f7", bg = "none" })
 
-vim.opt.winbar = "%#FontAwesonme# %f"
-
 -- Esto hace que el cursor siempre sea una barra en modo insertar, 
 -- ayudándote a ver exactamente dónde vas a escribir.
 vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50"

@@ -109,6 +109,44 @@ return {
       options = { "buffers", "curdir", "tabpages", "winsize", "skiprtp" },
     },
   },
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- Aquí puedes configurar qué tan agresivo quieres el cambio visual
+      lsp = {
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.styled_pa_lines"] = true,
+          ["cmp.entry.get_documentation"] = true,
+        },
+      },
+      presets = {
+        bottom_search = true,    -- El buscador abajo, pero moderno
+        command_palette = true,   -- ¡ESTO! Hace que los comandos floten al centro
+        long_message_to_split = true,
+        inc_rename = false,      -- Úsalo si tienes el plugin de rename
+        lsp_doc_border = true,   -- Bordes elegantes para docs de funciones
+      },
+    },
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify", -- Notificaciones flotantes con estilo
+    }
+  },
+  {
+    "utilyre/barbecue.nvim",
+    name = "barbecue",
+    version = "*",
+    dependencies = {
+      "SmiteshP/nvim-navic",
+      "nvim-tree/nvim-web-devicons", -- Para los iconos de Java, Python, etc.
+    },
+    opts = {
+      -- Puedes dejarlo vacío para el estilo por defecto o personalizarlo
+      show_modified = true,
+    },
+  },
 
   {
     "mfussenegger/nvim-jdtls",
