@@ -1,3 +1,7 @@
+vim.deprecate = function () 
+end
+
+vim.g.lspconfig_silent_deprecation = true
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
@@ -9,7 +13,9 @@ if not vim.uv.fs_stat(lazypath) then
   vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
 end
 
+
 vim.opt.rtp:prepend(lazypath)
+vim.opt.confirm = true
 
 local lazy_config = require "configs.lazy"
 
@@ -18,10 +24,8 @@ require("lazy").setup({
   {
     "NvChad/NvChad",
     lazy = false,
-    branch = "v2.5",
     import = "nvchad.plugins",
   },
-
   { import = "plugins" },
 }, lazy_config)
 
@@ -35,3 +39,4 @@ require "autocmds"
 vim.schedule(function()
   require "mappings"
 end)
+
