@@ -8,6 +8,10 @@ local options = {
     lua = { "stylua" },
     javascript = { "prettierd", "prettier", stop_after_first = true },
     typescript = { "prettierd", "prettier", stop_after_first = true },
+    javascriptreact = { "prettier" },
+    typescriptreact = { "prettier" },
+    css = { "prettier" },
+    html = { "prettier" },
     vue = { "prettierd", "prettier", stop_after_first = true }, -- Agregado para Vue
     java = { "google_java_format" }, -- Agregado para Java
   },
