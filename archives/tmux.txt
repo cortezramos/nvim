@@ -1,3 +1,7 @@
+#brew install tmux
+#~/.tmux.conf
+
+2026-02-17
 cat .tmux.conf
 # --- Configuración de MODE GOD ---
 
