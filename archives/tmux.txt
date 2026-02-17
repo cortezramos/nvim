@@ -1,0 +1,35 @@
+cat .tmux.conf
+# --- Configuración de MODE GOD ---
+
+# Mejorar los colores (necesario para que Darcula/Tokyonight se vean bien)
+set -g default-terminal "screen-256color"
+set -as terminal-features ",xterm-256color:RGB"
+
+# Cambiar el prefijo (atajo maestro) de Ctrl+b a Ctrl+a (más cómodo)
+set -g prefix C-a
+unbind C-b
+bind-key C-a send-prefix
+
+# Eliminar el retraso al presionar ESC (vital para Neovim)
+set -s escape-time 0
+
+# Atajos para dividir la pantalla (como en los IDEs)
+unbind %
+bind | split-window -h -c "#{pane_current_path}" # Dividir vertical
+unbind '"'
+bind - split-window -v -c "#{pane_current_path}" # Dividir horizontal
+
+# Recargar configuración rápido
+bind r source-file ~/.tmux.conf \; display "¡Configuración Recargada!"
+
+# Ratón activado (por si quieres redimensionar con el mouse)
+set -g mouse on
+
+# Enumerar ventanas desde 1 (no desde 0, para llegar más fácil con la mano)
+set -g base-index 1
+setw -g pane-base-index 1
+
+# --- Estética de la Barra de Estado ---
+set -g status-style bg='#1e1e2e',fg='#89dceb'
+set -g status-left "#[fg=#a6e3a1] 󰒋 Sesión: #S "
+set -g status-right "#[fg=#fab387] 󱫋 %H:%M #[fg=#89b4fa]  %d-%b "
