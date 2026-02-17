@@ -113,3 +113,14 @@ map("v", "<S-Tab>", "<gv", { desc = "Tabular a la izquierda" })
 
 map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Mover bloque abajo" })
 map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Mover bloque arriba" })
+
+local map = vim.keymap.set
+
+-- Poner punto de quiebre (Toggle Breakpoint)
+map("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", { desc = "Poner punto de quiebre" })
+
+-- Abrir la interfaz de variables
+map("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", { desc = "Ver variables" })
+-- 3. Los "pasos" de debug (como en IntelliJ)
+map("n", "<F10>", "<cmd>lua require'dap'.step_over()<cr>", { desc = "Debugger: Siguiente línea" })
+map("n", "<F11>", "<cmd>lua require'dap'.step_into()<cr>", { desc = "Debugger: Entrar a función" })
