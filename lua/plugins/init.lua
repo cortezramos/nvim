@@ -78,6 +78,12 @@ return {
     end,
   },
   {
+    "kdheepak/lazygit.nvim",
+    cmd = { "LazyGit", "LazyGitConfig", "LazyGitFilter", "LazyGitFilterCurrentFile" },
+    dependencies = { "nvim-lua/plenary.nvim" },
+    keys = { { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit (Gentleman Mode)" } },
+  },
+  {
     "nvim-tree/nvim-tree.lua",
     opts = {
       filters = {
@@ -230,19 +236,33 @@ return {
       ls.add_snippets("vue", {
         -- vref -> Crear una variable reactiva
         s("vref", {
-          t("const "), i(1, "myVar"), t(" = ref("), i(2, "null"), t(");")
+          t "const ",
+          i(1, "myVar"),
+          t " = ref(",
+          i(2, "null"),
+          t ");",
         }),
         -- vcomp -> Crear una propiedad computada
         s("vcomp", {
-          t("const "), i(1, "computedVar"), t(" = computed(() => {"),
-          t({"", "  return "}), i(0),
-          t({"", "});"}),
+          t "const ",
+          i(1, "computedVar"),
+          t " = computed(() => {",
+          t { "", "  return " },
+          i(0),
+          t { "", "});" },
         }),
         -- vfor -> Estructura de un v-for rápido
         s("vfor", {
-          t('<div v-for="'), i(1, "item"), t(' in '), i(2, "items"), t('" :key="'), i(3, "item.id"), t('">'),
-          t({"", "  "}), i(0),
-          t({"", "</div>"}),
+          t '<div v-for="',
+          i(1, "item"),
+          t " in ",
+          i(2, "items"),
+          t '" :key="',
+          i(3, "item.id"),
+          t '">',
+          t { "", "  " },
+          i(0),
+          t { "", "</div>" },
         }),
       })
     end,
