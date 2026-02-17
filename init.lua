@@ -1,5 +1,4 @@
-vim.deprecate = function () 
-end
+vim.deprecate = function() end
 
 vim.g.lspconfig_silent_deprecation = true
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
@@ -12,7 +11,6 @@ if not vim.uv.fs_stat(lazypath) then
   local repo = "https://github.com/folke/lazy.nvim.git"
   vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
 end
-
 
 vim.opt.rtp:prepend(lazypath)
 vim.opt.confirm = true
@@ -40,3 +38,5 @@ vim.schedule(function()
   require "mappings"
 end)
 
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
