@@ -16,7 +16,7 @@ map("n", "<F12>", function()
 end, { desc = "Buscar implementación por texto" })
 
 -- En tu archivo de mappings
-map("n", "<leader>db", "<cmd> Nvdash <cr>", { desc = "Ir al Dashboard" })
+map("n", "<leader>da", "<cmd> Nvdash <cr>", { desc = "Ir al Dashboard" })
 
 map("n", "<leader>x", function()
   local bufs = vim.fn.getbufinfo { buflisted = 1 }
@@ -35,12 +35,12 @@ map("n", "<leader>x", function()
   end
 end, { desc = "Cerrar buffer y volver al Dash si es el último" })
 
-map("n", "<leader>db", function()
+map("n", "<leader>da", function()
   require("nvchad.nvdash").open()
 end, { desc = "Abrir Dashboard DEV" })
 
 -- Abrir el Dashboard en cualquier momento
-map("n", "<leader>db", function()
+map("n", "<leader>da", function()
   local status, nvdash = pcall(require, "nvchad.nvdash")
   if status then
     nvdash.open()
