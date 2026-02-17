@@ -19,7 +19,7 @@ return {
     cmd = "Copilot",
     event = "InsertEnter",
     config = function()
-      require("copilot").setup({
+      require("copilot").setup {
         suggestion = {
           enabled = true,
           auto_trigger = true, -- Sugiere código automáticamente mientras escribes
@@ -28,23 +28,23 @@ return {
             accept = "<M-Right>", -- Presiona Alt + L para aceptar la sugerencia
             accept_word = false, -- No aceptar solo la palabra sugerida
             accept_line = false, -- No aceptar toda la linea sugerida
-            next = "<M-]>",   -- Alt + ] para la siguiente sugerencia
-            prev = "<M-[>",   -- Alt + [ para la anterior
+            next = "<M-]>", -- Alt + ] para la siguiente sugerencia
+            prev = "<M-[>", -- Alt + [ para la anterior
             dismiss = "<C-]>", -- Ctrl + ] para cerrar la sugerencia
           },
         },
         panel = { enabled = false }, -- Desactivado para no estorbar el flujo de NvChad
         filetypes = {
           markdown = true, -- Habilitar Copilot en archivos markdown,
-          help = false, 
-          gitcommit = false, 
-          gitrebase = false, 
+          help = false,
+          gitcommit = false,
+          gitrebase = false,
           hgcommit = false,
-          svn = false, 
+          svn = false,
           cvs = false,
-          ["."] = false
-        }
-      })
+          ["."] = false,
+        },
+      }
     end,
   },
   {
@@ -55,14 +55,14 @@ return {
       cursor_color = "#e0af68", -- Color llamativo
       stiffness = 0.6,
       trailing_stiffness = 0.3,
-      distance_stop_animating = 0.1
+      distance_stop_animating = 0.1,
     },
   },
   {
     "nvim-focus/focus.nvim",
     event = "VeryLazy",
     config = function()
-      require("focus").setup({
+      require("focus").setup {
         enable = true,
         autoresize = {
           enable = true,
@@ -73,8 +73,8 @@ return {
         excluded_buftypes = { "nofile", "prompt", "popup", "terminal" },
         ui = {
           signcolumn = false, -- Limpia la columna de la izquierda en paneles inactivos
-        }
-      })
+        },
+      }
     end,
   },
   {
@@ -111,6 +111,19 @@ return {
   },
   {
     "folke/noice.nvim",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      {
+        "rcarriga/nvim-notify",
+        opts = {
+          background_colour = "#000000", -- Esto quita el error
+          fps = 30,
+          render = "default",
+          stages = "fade", -- Animación suave de Gentleman
+          timeout = 2000,
+        },
+      },
+    },
     event = "VeryLazy",
     opts = {
       -- Aquí puedes configurar qué tan agresivo quieres el cambio visual
@@ -122,17 +135,13 @@ return {
         },
       },
       presets = {
-        bottom_search = true,    -- El buscador abajo, pero moderno
-        command_palette = true,   -- ¡ESTO! Hace que los comandos floten al centro
+        bottom_search = true, -- El buscador abajo, pero moderno
+        command_palette = true, -- ¡ESTO! Hace que los comandos floten al centro
         long_message_to_split = true,
-        inc_rename = false,      -- Úsalo si tienes el plugin de rename
-        lsp_doc_border = true,   -- Bordes elegantes para docs de funciones
+        inc_rename = false, -- Úsalo si tienes el plugin de rename
+        lsp_doc_border = true, -- Bordes elegantes para docs de funciones
       },
     },
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify", -- Notificaciones flotantes con estilo
-    }
   },
   {
     "utilyre/barbecue.nvim",
@@ -151,7 +160,93 @@ return {
   {
     "mfussenegger/nvim-jdtls",
     ft = "java",
-  }
+  },
+  {
+    "stevearc/conform.nvim",
+    event = "BufWritePre", -- Se ejecuta justo antes de guardar
+    opts = {
+      formatters_by_ft = {
+        -- Para Java: Usamos google-java-format
+        java = { "google-java-format" },
+        -- Para Vue, JS, TS, HTML y CSS: Usamos Prettier
+        javascript = { "prettier" },
+        typescript = { "prettier" },
+        vue = { "prettier" },
+        html = { "prettier" },
+        css = { "prettier" },
+      },
+      format_on_save = {
+        -- Estos ajustes son para que no se trabe el editor
+        timeout_ms = 500,
+        lsp_fallback = true,
+      },
+    },
+  },
+  -- En tu lua/plugins/init.lua, busca donde está luasnip o añádelo:
+  {
+    "L3MON4D3/LuaSnip",
+    config = function()
+      require "nvchad.configs.luasnip" -- Carga la base de NvChad
+      local ls = require "luasnip"
+      local s = ls.snippet
+      local t = ls.text_node
+      local i = ls.insert_node
+
+      -- Snippets de Java
+      ls.add_snippets("java", {
+        -- jm -> Java Method
+        s("jm", {
+          t "public ",
+          i(1, "void"),
+          t " ",
+          i(2, "methodName"),
+          t "(",
+          i(3),
+          t ") {",
+          t { "", "\t" },
+          i(0),
+          t { "", "}" },
+        }),
+        -- psv -> Public Static Void Main
+        s("psv", {
+          t "public static void main(String[] args) {",
+          t { "", "\t" },
+          i(0),
+          t { "", "}" },
+        }),
+        -- const -> Constructor
+        s("const", {
+          t "public ",
+          i(1, "ClassName"),
+          t "(",
+          i(2),
+          t ") {",
+          t { "", "\t" },
+          i(0),
+          t { "", "}" },
+        }),
+      })
+
+      ls.add_snippets("vue", {
+        -- vref -> Crear una variable reactiva
+        s("vref", {
+          t("const "), i(1, "myVar"), t(" = ref("), i(2, "null"), t(");")
+        }),
+        -- vcomp -> Crear una propiedad computada
+        s("vcomp", {
+          t("const "), i(1, "computedVar"), t(" = computed(() => {"),
+          t({"", "  return "}), i(0),
+          t({"", "});"}),
+        }),
+        -- vfor -> Estructura de un v-for rápido
+        s("vfor", {
+          t('<div v-for="'), i(1, "item"), t(' in '), i(2, "items"), t('" :key="'), i(3, "item.id"), t('">'),
+          t({"", "  "}), i(0),
+          t({"", "</div>"}),
+        }),
+      })
+    end,
+  },
 
   -- test new blink
   -- { import = "nvchad.blink.lazyspec" },

@@ -9,6 +9,7 @@ local options = {
     javascript = { "prettierd", "prettier", stop_after_first = true },
     typescript = { "prettierd", "prettier", stop_after_first = true },
     vue = { "prettierd", "prettier", stop_after_first = true }, -- Agregado para Vue
+    java = { "google_java_format" }, -- Agregado para Java
   },
   format_on_save = {
     timeout_ms = 500,
