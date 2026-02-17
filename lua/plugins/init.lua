@@ -162,7 +162,6 @@ return {
       show_modified = true,
     },
   },
-
   {
     "mfussenegger/nvim-jdtls",
     ft = "java",
@@ -185,6 +184,22 @@ return {
         -- Estos ajustes son para que no se trabe el editor
         timeout_ms = 500,
         lsp_fallback = true,
+      },
+    },
+  },
+  {
+    "rmagatti/auto-session",
+    lazy = false,
+    opts = {
+      auto_session_enabled = true,
+      auto_save_enabled = true,
+      auto_restore_enabled = true,
+      auto_session_suppress_dirs = { "~/", "~/Downloads", "/" },
+      -- Ignorar ventanas de plugins para que no se abran vacías
+      session_lens = {
+        load_on_setup = true,
+        theme_conf = { border = true },
+        previewer = false,
       },
     },
   },
