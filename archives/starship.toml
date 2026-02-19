@@ -1,0 +1,112 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = false
+
+# Este bloque controla el símbolo donde escribes
+[character]
+# Puedes poner el que quieras: ⚡, 🔥, 🚀, , 󰄛, ❯
+success_symbol = "[🤓](bold green) " 
+error_symbol = "[😔](bold red) "
+vimcmd_symbol = "[❮](bold green) "
+
+# Formato general del prompt
+format = """
+[░▒▓](#9A348E)\
+[  ](bg:#9A348E fg:#090618)\
+[](fg:#9A348E bg:#FCA17D)\
+$directory\
+[](fg:#FCA17D bg:#86BBD8)\
+$git_branch\
+$git_status\
+[](fg:#86BBD8 bg:#06969A)\
+$nodejs\
+$java\
+[](fg:#06969A bg:#33658A)\
+$time\
+[ ](fg:#33658A)\
+\n$character
+"""
+
+[directory]
+style = "bg:#FCA17D fg:#090618"
+format = "[ $path ]($style)"
+
+[git_branch]
+symbol = "󰊢 "
+style = "bg:#86BBD8 fg:#090618"
+format = "[[ $symbol $branch ]($style)]($style)"
+
+# Muestra la versión de Node.js (indispensable para React/Vue)
+[nodejs]
+symbol = " "
+style = "bold green"
+format = "via [$symbol($version )]($style)"
+detect_files = ["package.json", ".node-version", "pnpm-lock.yaml", "yarn.lock"]
+
+# Muestra información del proyecto (nombre y versión del package.json)
+[package]
+disabled = true
+symbol = "󰏗 "
+style = "bold 208" # Color naranja tipo npm
+format = "is [$symbol$version]($style) "
+
+[custom.react]
+detect_files = ["App.jsx", "App.tsx", "index.js", "index.tsx"]
+detect_extensions = ["jsx", "tsx"]
+symbol = " " # Icono de átomo para React
+style = "bold cyan"
+format = "[$symbol]($style) "
+
+# Símbolo para Vue
+[custom.vue]
+detect_files = ["vite.config.ts", "vite.config.js", "vue.config.js"]
+detect_extensions = ["vue"]
+symbol = "󰡄 " # Icono de Vue
+style = "bold green"
+format = "[$symbol]($style) "
+
+# Detecta si estás usando herramientas de construcción como Vite (común en Vue/React)
+[custom.vite]
+detect_files = ["vite.config.ts", "vite.config.js"]
+symbol = "⚡ Vite "
+style = "bold yellow"
+format = "[$symbol]($style)"
+
+[java]
+symbol = " "
+style = "bg:#06969A fg:#090618"
+format = "[[ $symbol ($version) ]($style)]($style)"
+
+[time]
+disabled = false
+time_format = "%R" # Hora actual
+style = "bg:#33658A fg:#090618"
+format = "[[ 󱑒 $time ]($style)]($style)"
+
+[azure]
+disabled = false
+format = 'on [$symbol($subscription)]($style) '
+symbol = '󰠅 '
+style = 'blue bold'
+
+[battery]
+full_symbol = '🔋 '
+charging_symbol = '⚡️ '
+discharging_symbol = '💀 '
+
+[[battery.display]]
+threshold = 10
+style = 'bold red'
+
+[docker_context]
+format = 'via [🐋 $context](blue bold)'
+
+[golang]
+format = 'via [🏎💨 $version](bold cyan) '
+
+# ~/.config/starship.toml
+
+[lua]
+format = 'via [🌕 $version](bold blue) '
