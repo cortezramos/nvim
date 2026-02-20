@@ -14,6 +14,8 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 vim.opt.confirm = true
+-- Borrar buffers que no se están usando y no tienen cambios
+vim.opt.hidden = false -- Evita que se acumulen en segundo plano
 
 local lazy_config = require "configs.lazy"
 
