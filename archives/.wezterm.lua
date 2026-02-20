@@ -5,8 +5,10 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
-config.window_background_opacity = 0.85
-config.macos_window_background_blur = 25
+config.default_prog = { '/opt/homebrew/bin/fish', '-l' }
+
+config.window_background_opacity = 0.80
+config.macos_window_background_blur = 15
 config.use_dead_keys = false 
 config.keys = {
   {

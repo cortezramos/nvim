@@ -4,39 +4,33 @@
 # Inserts a blank line between shell prompts
 add_newline = false
 
-# Este bloque controla el símbolo donde escribes
-[character]
-# Puedes poner el que quieras: ⚡, 🔥, 🚀, , 󰄛, ❯
-success_symbol = "[🤓](bold green) " 
-error_symbol = "[😔](bold red) "
-vimcmd_symbol = "[❮](bold green) "
-
 # Formato general del prompt
 format = """
-[░▒▓](#9A348E)\
-[  ](bg:#9A348E fg:#090618)\
-[](fg:#9A348E bg:#FCA17D)\
-$directory\
-[](fg:#FCA17D bg:#86BBD8)\
-$git_branch\
-$git_status\
-[](fg:#86BBD8 bg:#06969A)\
-$nodejs\
-$java\
-[](fg:#06969A bg:#33658A)\
-$time\
-[ ](fg:#33658A)\
-\n$character
-"""
+[╭─](bold green) $directory$git_branch$git_status$java$nodejs$python$rust$package$memory_usage[╰─](bold green) 🤓"""
 
 [directory]
-style = "bg:#FCA17D fg:#090618"
-format = "[ $path ]($style)"
+truncation_length = 3
+style = "bold blue"
+truncate_to_repo = true
+
+[time]
+format = "🕙 $time "
+style = "bold yellow"
+time_format = "%H:%M:%S"
+
+[username]
+format = "[$user]($style_user) "
+style = "bold green"
+show_always = true
+
+[cmd_duration]
+format = "took [$duration]($style) "
+style = "bold yellow"
 
 [git_branch]
 symbol = "󰊢 "
-style = "bg:#86BBD8 fg:#090618"
-format = "[[ $symbol $branch ]($style)]($style)"
+style = "bold bright-purple"
+format = "($style)[$symbol]($style)[$branch]($style) "
 
 # Muestra la versión de Node.js (indispensable para React/Vue)
 [nodejs]
@@ -78,12 +72,6 @@ format = "[$symbol]($style)"
 symbol = " "
 style = "bg:#06969A fg:#090618"
 format = "[[ $symbol ($version) ]($style)]($style)"
-
-[time]
-disabled = false
-time_format = "%R" # Hora actual
-style = "bg:#33658A fg:#090618"
-format = "[[ 󱑒 $time ]($style)]($style)"
 
 [azure]
 disabled = false
