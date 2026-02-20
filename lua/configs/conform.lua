@@ -13,7 +13,7 @@ local options = {
     css = { "prettier" },
     html = { "prettier" },
     vue = { "prettierd", "prettier", stop_after_first = true }, -- Agregado para Vue
-    java = { "google_java_format" }, -- Agregado para Java
+    --java = { "google_java_format" }, -- Agregado para Java
   },
   format_on_save = {
     timeout_ms = 500,

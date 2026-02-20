@@ -178,7 +178,6 @@ return {
   },
   {
     "stevearc/conform.nvim",
-    event = "BufWritePre", -- Se ejecuta justo antes de guardar
     opts = {
       formatters_by_ft = {
         -- Para Java: Usamos google-java-format
@@ -189,11 +188,6 @@ return {
         vue = { "prettier" },
         html = { "prettier" },
         css = { "prettier" },
-      },
-      format_on_save = {
-        -- Estos ajustes son para que no se trabe el editor
-        timeout_ms = 500,
-        lsp_fallback = true,
       },
     },
   },
