@@ -1,5 +1,5 @@
-local home = os.getenv("HOME")
-local lombok_path = os.getenv("HOME") .. "/lombok.jar"
+local home = os.getenv "HOME"
+local lombok_path = os.getenv "HOME" .. "/lombok.jar"
 
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 local workspace_dir = home .. "/.cache/jdtls/workspace/" .. project_name
@@ -9,21 +9,25 @@ local config = {
   -- Usamos la ruta completa al binario de Mason
   cmd = {
     mason_path,
-    "-data", workspace_dir,
+    "-data",
+    workspace_dir,
     "--jvm-arg=-Xmx2g",
     "--jvm-arg=-javaagent:" .. lombok_path,
   },
-  root_dir = vim.fs.dirname(vim.fs.find({'.gradlew', '.git', 'mvnw', 'pom.xml'}, { upward = true })[1]),
+  root_dir = vim.fs.dirname(vim.fs.find({ ".gradlew", ".git", "mvnw", "pom.xml" }, { upward = true })[1]),
   settings = {
     java = {
       signatureHelp = { enabled = true },
-      contentProvider = { preferred = 'fernflower' },
-    }
+      contentProvider = { preferred = "fernflower" },
+    },
   },
 }
 
 local bundles = {
-  vim.fn.glob(vim.fn.stdpath("data") .. "/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.helper-*.jar", true),
+  vim.fn.glob(
+    vim.fn.stdpath "data" .. "/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.helper-*.jar",
+    true
+  ),
 }
 
 -- Si instalaste java-test, añádelo a los bundles:
@@ -36,21 +40,22 @@ local function add_to_bundles(path_pattern)
 end
 
 -- Añadir Debug Adapter
-add_to_bundles(vim.fn.stdpath("data") .. "/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.helper-*.jar")
+add_to_bundles(
+  vim.fn.stdpath "data" .. "/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.helper-*.jar"
+)
 
 -- Añadir Java Test (si existe)
-add_to_bundles(vim.fn.stdpath("data") .. "/mason/packages/java-test/extension/server/*.jar")
+add_to_bundles(vim.fn.stdpath "data" .. "/mason/packages/java-test/extension/server/*.jar")
 
-config['init_options'] = {
-  bundles = bundles
+config["init_options"] = {
+  bundles = bundles,
 }
 
 local on_attach = function(client, bufnr)
   -- 1. Cargar los mapeos estándar de NvChad (esto trae la mayoría)
   pcall(function()
     require("nvchad.configs.lspconfig").on_attach(client, bufnr)
-  end
-  )
+  end)
 
   -- 2. Forzar mapeos específicos para Java que a veces fallan
   local map = vim.keymap.set
@@ -67,11 +72,16 @@ local on_attach = function(client, bufnr)
 
   -- Acciones de código (Para importar clases, etc.)
   map("n", "<leader>ca", "<cmd>Telescope lsp_code_actions<CR>", { desc = "LSP Code Actions" })
-  
+
   -- Organizar Imports automáticamente (Opcional pero recomendado)
-  map("n", "<leader>oi", [[<cmd>lua require('jdtls').organize_imports()<CR>]], { buffer = bufnr, desc = "Organize Imports" })
+  map(
+    "n",
+    "<leader>oi",
+    [[<cmd>lua require('jdtls').organize_imports()<CR>]],
+    { buffer = bufnr, desc = "Organize Imports" }
+  )
 end
 
 config.on_attach = on_attach
 
-require('jdtls').start_or_attach(config)
+require("jdtls").start_or_attach(config)

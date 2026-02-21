@@ -25,7 +25,7 @@ return {
           auto_trigger = true, -- Sugiere código automáticamente mientras escribes
           debounce = 75, -- TIempo en milisegundospara mostrar una sugerencia
           keymap = {
-            accept = "<M-Right>", -- Presiona Alt + L para aceptar la sugerencia
+            accept = "<M-l>", -- Presiona Alt + L para aceptar la sugerencia
             accept_word = false, -- No aceptar solo la palabra sugerida
             accept_line = false, -- No aceptar toda la linea sugerida
             next = "<M-]>", -- Alt + ] para la siguiente sugerencia
