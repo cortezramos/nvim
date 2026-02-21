@@ -181,7 +181,6 @@ return {
     opts = {
       formatters_by_ft = {
         -- Para Java: Usamos google-java-format
-        java = { "google-java-format" },
         -- Para Vue, JS, TS, HTML y CSS: Usamos Prettier
         javascript = { "prettier" },
         typescript = { "prettier" },
