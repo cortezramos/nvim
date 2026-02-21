@@ -50,5 +50,14 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+vim.diagnostic.config {
+  virtual_text = true, -- Muestra el error al final de la línea
+  severity_sort = true,
+  float = {
+    border = "rounded",
+    source = "always", -- Esto te dirá SI EL ERROR ES DE JDTLS O DE SONARLINT
+  },
+}
+
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })

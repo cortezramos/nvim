@@ -206,6 +206,25 @@ return {
       },
     },
   },
+  {
+    "https://gitlab.com/schrieveslaach/sonarlint.nvim",
+    dependencies = { "neovim/nvim-lspconfig" },
+    config = function()
+      require("sonarlint").setup {
+        server = {
+          cmd = {
+            vim.fn.stdpath "data" .. "/mason/bin/sonarlint-language-server",
+            "-stdio",
+            "-analyzers",
+            -- Asegúrate de que este .jar existe en tu carpeta de mason
+            vim.fn.stdpath "data"
+              .. "/mason/packages/sonarlint-language-server/extension/analyzers/sonarqube-java-plugin.jar",
+          },
+        },
+        filetypes = { "java" },
+      }
+    end,
+  },
   -- En tu lua/plugins/init.lua, busca donde está luasnip o añádelo:
   {
     "L3MON4D3/LuaSnip",
