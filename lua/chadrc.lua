@@ -18,6 +18,9 @@ M.base46 = {
       bg = "#343944",
       bold = true,
     },
+    LineNr = {
+      fg = "#585b70",
+    },
   },
 }
 
@@ -32,7 +35,6 @@ M.nvdash = {
   },
   buttons = {
     { txt = "🖥️ Menu", keys = "Spc e", cmd = ":NvimTreeToggle" },
-    { txt = "🤓 AI Mode", keys = "Spc t t", cmd = "lua _G.toggle_AI_term()" },
     { txt = "  Restore Session", keys = "Spc q s", cmd = "lua require('persistence').load()" },
     { txt = "  Archivos Recientes", keys = "Spc f o", cmd = "Telescope oldfiles" },
     { txt = "󰈚  Nuevo Archivo Codigo", keys = "Spc n", cmd = "lua require('utils').smart_create_file()" },
