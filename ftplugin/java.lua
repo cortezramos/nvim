@@ -23,25 +23,19 @@ local config = {
   },
 }
 
-local bundles = {
-  vim.fn.glob(
-    vim.fn.stdpath "data" .. "/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.helper-*.jar",
-    true
-  ),
-}
-
--- Si instalaste java-test, añádelo a los bundles:
+-- Añadiendo java-test a los bundles:
 local bundles = {}
 
--- Función para añadir jars de forma segura
 local function add_to_bundles(path_pattern)
-  local matches = vim.fn.glob(path_pattern, true, true) -- El tercer parámetro 'true' fuerza que devuelva una TABLA
-  vim.list_extend(bundles, matches)
+  local matches = vim.fn.glob(path_pattern, true, true) -- true, true → devuelve lista
+  if #matches > 0 then
+    vim.list_extend(bundles, matches)
+  end
 end
 
--- Añadir Debug Adapter
+-- Añadir Debug Adapter (usa 'plugin', no 'helper')
 add_to_bundles(
-  vim.fn.stdpath "data" .. "/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.helper-*.jar"
+  vim.fn.stdpath "data" .. "/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar"
 )
 
 -- Añadir Java Test (si existe)
@@ -56,6 +50,8 @@ local on_attach = function(client, bufnr)
   pcall(function()
     require("nvchad.configs.lspconfig").on_attach(client, bufnr)
   end)
+
+  require("jdtls").setup_dap { hotcodereplace = "auto" }
 
   -- 2. Forzar mapeos específicos para Java que a veces fallan
   local map = vim.keymap.set

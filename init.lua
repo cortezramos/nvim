@@ -70,5 +70,17 @@ dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close()
 end
 
+local dap = require "dap"
+
+dap.configurations.java = {
+  {
+    type = "java",
+    request = "attach",
+    name = "Debug (Attach) - Remote",
+    hostName = "127.0.0.1",
+    port = 5005,
+  },
+}
+
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
