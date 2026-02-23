@@ -102,7 +102,7 @@ end, { desc = "Restaurar última sesión" })
 -- Formateo de código con Conform
 map("n", "<leader>fm", function()
   require("conform").format { lsp_fallback = true, async = false, timeout_ms = 500 }
-end, { desc = "Formatear archivo (Estilo Gentleman)" })
+end, { desc = "Formatear archivo" })
 
 map("n", "<leader>oi", function()
   require("jdtls").organize_imports()
@@ -118,7 +118,6 @@ local map = vim.keymap.set
 
 -- Poner punto de quiebre (Toggle Breakpoint)
 map("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", { desc = "Poner punto de quiebre" })
-
 -- Abrir la interfaz de variables
 map("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", { desc = "Ver variables" })
 -- 3. Los "pasos" de debug (como en IntelliJ)
