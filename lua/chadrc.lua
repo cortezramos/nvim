@@ -11,7 +11,6 @@ M.base46 = {
   hl_override = {
     CursorLine = {
       bg = "#343944",
-      fg = "#ffffff",
       bold = true,
     },
     CursorLineNr = {
