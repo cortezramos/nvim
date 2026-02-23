@@ -82,5 +82,8 @@ dap.configurations.java = {
   },
 }
 
+vim.fn.sign_define("DapBreakpoint", { text = "🐛", texthl = "DapBreakpoint", linehl = "", numhl = "" })
+vim.fn.sign_define("DapStopped", { text = "▶️", texthl = "DapStopped", linehl = "DebugColumn", numhl = "" })
+
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })

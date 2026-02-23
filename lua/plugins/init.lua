@@ -72,7 +72,7 @@ return {
         excluded_filetypes = { "nvdash", "TelescopePrompt", "NvimTree", "toggleterm", "notify" },
         excluded_buftypes = { "nofile", "prompt", "popup", "terminal" },
         ui = {
-          signcolumn = false, -- Limpia la columna de la izquierda en paneles inactivos
+          signcolumn = true, -- Limpia la columna de la izquierda en paneles inactivos
         },
       }
     end,

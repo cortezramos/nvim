@@ -122,5 +122,5 @@ map("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", { desc =
 map("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", { desc = "Ver variables" })
 -- 3. Los "pasos" de debug (como en IntelliJ)
 map("n", "<F5>", "<cmd>lua require'dap'.continue()<cr>", { desc = "Debugger: Continuar/Ejecutar" })
-map("n", "<F10>", "<cmd>lua require'dap'.step_over()<cr>", { desc = "Debugger: Siguiente línea" })
-map("n", "<F11>", "<cmd>lua require'dap'.step_into()<cr>", { desc = "Debugger: Entrar a función" })
+map("n", "<F8>", "<cmd>lua require'dap'.step_over()<cr>", { desc = "Debugger: Siguiente línea" })
+map("n", "<F7>", "<cmd>lua require'dap'.step_into()<cr>", { desc = "Debugger: Entrar a función" })
