@@ -126,3 +126,16 @@ map("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", { desc = "Ver var
 map("n", "<F5>", "<cmd>lua require'dap'.continue()<cr>", { desc = "Debugger: Continuar/Ejecutar" })
 map("n", "<F8>", "<cmd>lua require'dap'.step_over()<cr>", { desc = "Debugger: Siguiente línea" })
 map("n", "<F7>", "<cmd>lua require'dap'.step_into()<cr>", { desc = "Debugger: Entrar a función" })
+
+-- Navegar en ocurrencias con Illuminate
+vim.keymap.set("n", "<M-n>", function()
+  require("illuminate").goto_next_reference()
+end, { desc = "Siguiente ocurrencia" })
+vim.keymap.set("n", "<M-p>", function()
+  require("illuminate").goto_prev_reference()
+end, { desc = "Anterior ocurrencia" })
+
+vim.opt.hlsearch = true -- Resaltar búsquedas
+vim.opt.incsearch = true -- Ir resaltando mientras escribes
+-- Atajo para limpiar el resaltado con la tecla Esc
+vim.keymap.set("n", "<Esc>", ":nohlsearch<CR>", { silent = true })

@@ -51,6 +51,21 @@ return {
     end,
   },
   {
+    "RRethy/vim-illuminate",
+    config = function()
+      require("illuminate").configure {
+        delay = 100, -- Qué tan rápido resalta (en ms)
+        under_cursor = true, -- También resalta la que tienes debajo
+      }
+
+      -- OPCIONAL: Cambia el color del resaltado para que sea muy obvio
+      -- Esto hará que el fondo de las variables sea un poco más claro
+      vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = "#3b4252", underline = true })
+      vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#3b4252", underline = true })
+      vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = "#3b4252", underline = true })
+    end,
+  },
+  {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
