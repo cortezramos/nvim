@@ -21,6 +21,15 @@ M.smart_create_file = function()
       "-not",
       "-path",
       "./node_modules*",
+      "-not",
+      "-path",
+      "./bin*",
+      "-not",
+      "-path",
+      "./build*",
+      "-not",
+      "-path",
+      "./gradle*",
     },
     attach_mappings = function(prompt_bufnr, _)
       actions.select_default:replace(function()

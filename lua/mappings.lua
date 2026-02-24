@@ -23,11 +23,13 @@ map("n", "<leader>x", function()
 
   if #bufs <= 1 then
     -- Si es el último buffer, abrimos el Dash ANTES de borrar el buffer
-    local status, nvdash = pcall(require, "nvchad.nvdash")
+    local status, nt_api = pcall(require, "nvim-tree.api")
     if status then
-      nvdash.open()
+      nt_api.tree.open()
       -- Borramos el buffer anterior en segundo plano para que no se cierre la app
       vim.cmd "bwipeout #"
+    else
+      vim.cmd "bwipeout"
     end
   else
     -- Si hay más buffers, usamos el cierre normal de NvChad

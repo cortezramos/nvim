@@ -13,7 +13,43 @@ return {
       require "configs.lspconfig"
     end,
   },
+  {
+    "b0o/incline.nvim",
+    event = "BufReadPre",
+    config = function()
+      require("incline").setup {
+        window = {
+          padding = 0,
+          margin = { horizontal = 1, vertical = 0 },
+          placement = { vertical = "top", horizontal = "right" },
+        },
+        render = function(props)
+          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+          if filename == "" then
+            filename = "[No Name]"
+          end
 
+          local devicons = require "nvim-web-devicons"
+          local icon, color = devicons.get_icon_color(filename)
+          local modified = vim.api.nvim_buf_get_option(props.buf, "modified")
+
+          return {
+            { " ", guifg = "#3b4261" }, -- Borde izquierdo redondeado
+            {
+              { " " .. (icon or "") .. " ", guifg = color, guibg = "#3b4261" },
+              {
+                filename .. " ",
+                gui = modified and "bold,italic" or "bold",
+                guifg = modified and "#ff9e64" or "#c0caf5",
+                guibg = "#3b4261",
+              },
+            },
+            { " ", guifg = "#3b4261" }, -- Borde derecho redondeado
+          }
+        end,
+      }
+    end,
+  },
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",

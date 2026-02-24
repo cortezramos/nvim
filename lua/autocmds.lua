@@ -8,9 +8,9 @@ autocmd("BufDelete", {
     vim.schedule(function()
       local bufs = vim.fn.getbufinfo { buflisted = 1 }
       if #bufs == 0 then
-        local status, nvdash = pcall(require, "nvchad.nvdash")
+        local status, nt_api = pcall(require, "nvim-tree.api")
         if status then
-          nvdash.open()
+          nt_api.tree.open()
         end
       end
     end)
