@@ -51,6 +51,24 @@ return {
     end,
   },
   {
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+    ft = { "markdown" },
+    opts = {
+      -- Aquí puedes personalizar si quieres ver los códigos de color,
+      -- círculos para las listas, etc.
+      code = {
+        sign = false,
+        width = "block",
+        right_pad = 1,
+      },
+      heading = {
+        -- Esto hace que los títulos se vean con colores e iconos
+        icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
+      },
+    },
+  },
+  {
     "RRethy/vim-illuminate",
     config = function()
       require("illuminate").configure {

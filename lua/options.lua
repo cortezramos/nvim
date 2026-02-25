@@ -32,3 +32,6 @@ vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#7aa2f7", bg = "none" })
 -- Esto hace que el cursor siempre sea una barra en modo insertar,
 -- ayudándote a ver exactamente dónde vas a escribir.
 vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50"
+
+vim.opt.conceallevel = 2 -- Esconde los símbolos de formato (*, #, _, etc.)
+vim.opt.concealcursor = "nc" -- Los esconde en modo normal, pero los muestra al edita
