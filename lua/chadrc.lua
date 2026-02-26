@@ -6,7 +6,7 @@
 local M = {}
 
 M.base46 = {
-  theme = "onedark",
+  theme = "kanagawa",
   transparency = true,
   hl_override = {
     CursorLine = {

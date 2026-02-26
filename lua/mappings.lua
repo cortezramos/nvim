@@ -119,7 +119,7 @@ map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Mover bloque arriba" })
 local map = vim.keymap.set
 
 -- Code Actions (Importaciones, implementar interfaces, etc.)
-vim.keymap.set("n", "<M-CR>", vim.lsp.buf.code_action, { desc = "LSP Code Action (IntelliJ style)" })
+vim.keymap.set("n", "<M-p>", vim.lsp.buf.code_action, { desc = "LSP Code Action (IntelliJ style)" })
 -- Poner punto de quiebre (Toggle Breakpoint)
 map("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", { desc = "Poner punto de quiebre" })
 -- Abrir la interfaz de variables
