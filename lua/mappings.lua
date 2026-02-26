@@ -118,6 +118,8 @@ map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Mover bloque arriba" })
 
 local map = vim.keymap.set
 
+-- Code Actions (Importaciones, implementar interfaces, etc.)
+vim.keymap.set("n", "<M-CR>", vim.lsp.buf.code_action, { desc = "LSP Code Action (IntelliJ style)" })
 -- Poner punto de quiebre (Toggle Breakpoint)
 map("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", { desc = "Poner punto de quiebre" })
 -- Abrir la interfaz de variables
@@ -128,10 +130,10 @@ map("n", "<F8>", "<cmd>lua require'dap'.step_over()<cr>", { desc = "Debugger: Si
 map("n", "<F7>", "<cmd>lua require'dap'.step_into()<cr>", { desc = "Debugger: Entrar a función" })
 
 -- Navegar en ocurrencias con Illuminate
-vim.keymap.set("n", "<M-n>", function()
+vim.keymap.set("n", "]]", function()
   require("illuminate").goto_next_reference()
 end, { desc = "Siguiente ocurrencia" })
-vim.keymap.set("n", "<M-p>", function()
+vim.keymap.set("n", "[[", function()
   require("illuminate").goto_prev_reference()
 end, { desc = "Anterior ocurrencia" })
 

@@ -12,8 +12,19 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+-- Forzar capacidades de resaltado si el servidor no las reporta
+local on_attach_custom = function(client, bufnr)
+  -- Llamamos al on_attach original de NvChad
+  nvlsp.on_attach(client, bufnr)
+
+  -- Si es volar o ts_ls, forzamos el soporte de iluminación
+  if client.name == "volar" or client.name == "ts_ls" then
+    client.server_capabilities.documentHighlightProvider = true
+  end
+end
+
 lspconfig.ts_ls.setup {
-  on_attach = nvlsp.on_attach,
+  on_attach = nvlsp.on_attach_custom,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
   filetypes = {
@@ -23,7 +34,6 @@ lspconfig.ts_ls.setup {
     "javascript",
     "javascriptreact",
     "javascript.jsx",
-    "vue",
   },
   init_options = {
     plugins = {
@@ -37,9 +47,17 @@ lspconfig.ts_ls.setup {
 }
 
 lspconfig.volar.setup {
-  on_attach = nvlsp.on_attach,
+  on_attach = nvlsp.on_attach_custom,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
+  init_options = {
+    vue = {
+      hybridMode = false,
+    },
+    typescript = {
+      tsdk = vim.fn.stdpath "data" .. "/mason/packages/typescript-language-server/node_modules/typescript/lib",
+    },
+  },
 }
 
 lspconfig.eslint.setup {

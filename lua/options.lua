@@ -35,3 +35,5 @@ vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50"
 
 vim.opt.conceallevel = 2 -- Esconde los símbolos de formato (*, #, _, etc.)
 vim.opt.concealcursor = "nc" -- Los esconde en modo normal, pero los muestra al edita
+
+vim.opt.updatetime = 250

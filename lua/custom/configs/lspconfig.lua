@@ -20,6 +20,16 @@ lspconfig.ts_ls.setup {
   on_attach = on_attach,
   on_init = on_init,
   capabilities = capabilities,
+  init_options = {
+    plugins = {
+      {
+        name = "@vue/typescript-plugin",
+        location = vim.fn.stdpath "data" .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+        languages = { "vue" },
+      },
+    },
+  },
+
   -- Evitamos que ts_ls choque con vue_ls en archivos .vue
   filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
 }
@@ -35,8 +45,7 @@ lspconfig.vue_ls.setup {
     },
     typescript = {
       -- Usamos la función de arriba para obtener la ruta real
-      tsdk = vim.fn.stdpath("data") .. "/mason/packages/typescript-language-server/node_modules/typescript/lib"
+      tsdk = vim.fn.stdpath "data" .. "/mason/packages/typescript-language-server/node_modules/typescript/lib",
     },
   },
 }
-
