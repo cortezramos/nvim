@@ -47,17 +47,19 @@ config["init_options"] = {
 
 local on_attach = function(client, bufnr)
   -- 1. Cargar los mapeos estándar de NvChad (esto trae la mayoría)
-  pcall(function()
-    require("nvchad.configs.lspconfig").on_attach(client, bufnr)
-  end)
+  local nvlsp = require "nvchad.configs.lspconfig"
+  nvlsp.on_attach(client, bufnr)
 
+  -- 2. Forzar documentHighlight para illuminate
+  client.server_capabilities.documentHighlightProvider = true
+
+  -- 3. Setup DAP para debugging
   require("jdtls").setup_dap { hotcodereplace = "auto" }
 
-  -- 2. Forzar mapeos específicos para Java que a veces fallan
+  -- 4. Mapeos específicos para Java
   local map = vim.keymap.set
-  local opts = { buffer = bufnr, desc = "LSP Java" }
 
-  -- Ir a Definición (usualmente Space + g + d en NvChad, lo ponemos directo en gd)
+  -- Ir a Definición
   map("n", "gd", [[<cmd>Telescope lsp_definitions<CR>]], { buffer = bufnr, desc = "Java Definition" })
 
   -- Ir a Implementación (ESTE ES EL QUE TE FALLA)
@@ -67,7 +69,7 @@ local on_attach = function(client, bufnr)
   map("n", "gr", [[<cmd>Telescope lsp_references<CR>]], { buffer = bufnr, desc = "Java References" })
 
   -- Acciones de código (Para importar clases, etc.)
-  map("n", "<leader>ca", "<cmd>Telescope lsp_code_actions<CR>", { desc = "LSP Code Actions" })
+  map("n", "<leader>ca", "<cmd>Telescope lsp_code_actions<CR>", { buffer = bufnr, desc = "LSP Code Actions" })
 
   -- Organizar Imports automáticamente (Opcional pero recomendado)
   map(
@@ -76,8 +78,16 @@ local on_attach = function(client, bufnr)
     [[<cmd>lua require('jdtls').organize_imports()<CR>]],
     { buffer = bufnr, desc = "Organize Imports" }
   )
+
+  -- Log para debugging (opcional, puedes comentarlo después)
+  print(string.format("JDTLS attached | documentHighlight: %s", 
+    tostring(client.server_capabilities.documentHighlightProvider)))
 end
 
 config.on_attach = on_attach
+
+-- Asegurarnos de usar las mismas capabilities que los otros LSP
+local nvlsp = require "nvchad.configs.lspconfig"
+config.capabilities = nvlsp.capabilities
 
 require("jdtls").start_or_attach(config)
