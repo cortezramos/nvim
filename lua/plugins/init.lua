@@ -85,9 +85,9 @@ return {
 
       -- OPCIONAL: Cambia el color del resaltado para que sea muy obvio
       -- Esto hará que el fondo de las variables sea un poco más claro
-      vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = "#3b4252", fg = "#ff007c", underline = true, bold = true })
-      vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#3b4252", fg = "#ff007c", underline = true, bold = true })
-      vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = "#444b5a", fg = "#ff007c", underline = true, bold = true })
+      vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = "#3b4252", fg = "#ffdd33", underline = true, bold = true })
+      vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#3b4252", fg = "#ffdd33", underline = true, bold = true })
+      vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = "#444b5a", fg = "#ffdd33", underline = true, bold = true })
     end,
   },
   {
