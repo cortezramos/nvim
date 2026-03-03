@@ -37,3 +37,4 @@ vim.opt.conceallevel = 2 -- Esconde los símbolos de formato (*, #, _, etc.)
 vim.opt.concealcursor = "nc" -- Los esconde en modo normal, pero los muestra al edita
 
 vim.opt.updatetime = 250
+vim.opt.winbar = "%f %m %= %l %c"
