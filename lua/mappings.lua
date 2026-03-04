@@ -49,33 +49,6 @@ map("n", "<leader>da", function()
   end
 end, { desc = "Abrir Dashboard Solidarity" })
 
-_G.toggle_AI_term = function()
-  -- Usamos la API de bajo nivel para saltarnos el problema del 'cmd' string
-  local api = vim.api
-
-  if vim.bo.filetype == "nvdash" then
-    -- Intentamos saltar al buffer anterior (el último archivo real abierto)
-    api.nvim_command "silent! b# "
-
-    -- Si después de b# seguimos en un buffer vacío o dashboard,
-    -- significa que no había archivos abiertos.
-    if vim.bo.filetype == "nvdash" or vim.bo.buftype == "nofile" then
-      api.nvim_command "enew"
-    end
-  end
-
-  api.nvim_command "vsplit"
-  api.nvim_command "wincmd l"
-  api.nvim_command "terminal"
-
-  local width = math.floor(vim.o.columns * 0.4)
-  api.nvim_win_set_width(0, width)
-
-  vim.opt_local.buflisted = false
-
-  api.nvim_command "startinsert"
-end
-
 -- NAVEGACIÓN DESDE MODO NORMAL (Cuando estás en el código)
 map("n", "<C-h>", "<C-w>h", { desc = "Ventana Izquierda" })
 map("n", "<C-l>", "<C-w>l", { desc = "Ventana Derecha" })
