@@ -102,6 +102,10 @@ map("n", "<F5>", "<cmd>lua require'dap'.continue()<cr>", { desc = "Debugger: Con
 map("n", "<F8>", "<cmd>lua require'dap'.step_over()<cr>", { desc = "Debugger: Siguiente línea" })
 map("n", "<F7>", "<cmd>lua require'dap'.step_into()<cr>", { desc = "Debugger: Entrar a función" })
 
+map("n", "<leader>rn", function()
+  vim.lsp.buf.rename()
+end, { desc = "Renombrar símbolo" })
+
 -- Navegar en ocurrencias con Illuminate
 vim.keymap.set("n", "]]", function()
   require("illuminate").goto_next_reference()
