@@ -157,7 +157,7 @@ return {
     "kdheepak/lazygit.nvim",
     cmd = { "LazyGit", "LazyGitConfig", "LazyGitFilter", "LazyGitFilterCurrentFile" },
     dependencies = { "nvim-lua/plenary.nvim" },
-    keys = { { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit (Gentleman Mode)" } },
+    keys = { { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" } },
   },
   {
     "nvim-tree/nvim-tree.lua",
@@ -208,10 +208,10 @@ return {
       {
         "rcarriga/nvim-notify",
         opts = {
-          background_colour = "#000000", -- Esto quita el error
+          background_colour = "#000000",
           fps = 30,
           render = "default",
-          stages = "fade", -- Animación suave de Gentleman
+          stages = "fade", -- Animación suave
           timeout = 2000,
         },
       },
