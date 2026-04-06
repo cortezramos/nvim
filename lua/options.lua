@@ -14,7 +14,6 @@ vim.opt.cursorlineopt = "both"
 vim.opt.shell = "/opt/homebrew/bin/fish"
 
 vim.opt.laststatus = 3
-vim.opt.winbar = "%f"
 
 vim.opt.fillchars = {
   horiz = "━",

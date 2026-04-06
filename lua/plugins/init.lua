@@ -1,8 +1,23 @@
 return {
   {
     "stevearc/conform.nvim",
-    event = "BufWritePre", -- uncomment for format on save
-    opts = require "configs.conform",
+    event = "BufWritePre",
+    opts = {
+      formatters_by_ft = {
+        lua = { "stylua" },
+        javascript = { "prettierd", "prettier", stop_after_first = true },
+        typescript = { "prettierd", "prettier", stop_after_first = true },
+        javascriptreact = { "prettier" },
+        typescriptreact = { "prettier" },
+        css = { "prettier" },
+        html = { "prettier" },
+        vue = { "prettierd", "prettier", stop_after_first = true },
+      },
+      format_on_save = {
+        timeout_ms = 500,
+        lsp_fallback = true,
+      },
+    },
   },
 
   -- These are some examples, uncomment them if you want to see them work!
@@ -251,36 +266,6 @@ return {
   {
     "mfussenegger/nvim-jdtls",
     ft = "java",
-  },
-  {
-    "stevearc/conform.nvim",
-    opts = {
-      formatters_by_ft = {
-        -- Para Java: Usamos google-java-format
-        -- Para Vue, JS, TS, HTML y CSS: Usamos Prettier
-        javascript = { "prettier" },
-        typescript = { "prettier" },
-        vue = { "prettier" },
-        html = { "prettier" },
-        css = { "prettier" },
-      },
-    },
-  },
-  {
-    "rmagatti/auto-session",
-    lazy = false,
-    opts = {
-      auto_session_enabled = true,
-      auto_save_enabled = true,
-      auto_restore_enabled = true,
-      auto_session_suppress_dirs = { "~/", "~/Downloads", "/" },
-      -- Ignorar ventanas de plugins para que no se abran vacías
-      session_lens = {
-        load_on_setup = true,
-        theme_conf = { border = true },
-        previewer = false,
-      },
-    },
   },
   {
     "https://gitlab.com/schrieveslaach/sonarlint.nvim",

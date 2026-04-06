@@ -15,33 +15,22 @@ map("n", "<F12>", function()
   require("telescope.builtin").live_grep { default_text = word }
 end, { desc = "Buscar implementación por texto" })
 
--- En tu archivo de mappings
-map("n", "<leader>da", "<cmd> Nvdash <cr>", { desc = "Ir al Dashboard" })
-
 map("n", "<leader>x", function()
   local bufs = vim.fn.getbufinfo { buflisted = 1 }
 
   if #bufs <= 1 then
-    -- Si es el último buffer, abrimos el Dash ANTES de borrar el buffer
     local status, nt_api = pcall(require, "nvim-tree.api")
     if status then
       nt_api.tree.open()
-      -- Borramos el buffer anterior en segundo plano para que no se cierre la app
       vim.cmd "bwipeout #"
     else
       vim.cmd "bwipeout"
     end
   else
-    -- Si hay más buffers, usamos el cierre normal de NvChad
     require("nvchad.tabufline").close_buffer()
   end
 end, { desc = "Cerrar buffer y volver al Dash si es el último" })
 
-map("n", "<leader>da", function()
-  require("nvchad.nvdash").open()
-end, { desc = "Abrir Dashboard DEV" })
-
--- Abrir el Dashboard en cualquier momento
 map("n", "<leader>da", function()
   local status, nvdash = pcall(require, "nvchad.nvdash")
   if status then
@@ -61,8 +50,6 @@ map("t", "<C-l>", [[<C-\><C-n><C-w>l]], { desc = "Saltar a la Terminal (Derecha)
 -- Si quieres seguir usando Alt/Opt pero sin que abra la terminal de NvChad:
 map({ "n", "t" }, "<A-h>", [[<C-\><C-n><C-w>h]], { desc = "Navegar Izquierda" })
 map({ "n", "t" }, "<A-l>", [[<C-\><C-n><C-w>l]], { desc = "Navegar Derecha" })
-
-local map = vim.keymap.set
 
 -- Restaurar la sesión del directorio actual
 map("n", "<leader>qs", function()
@@ -88,8 +75,6 @@ map("v", "<S-Tab>", "<gv", { desc = "Tabular a la izquierda" })
 
 map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Mover bloque abajo" })
 map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Mover bloque arriba" })
-
-local map = vim.keymap.set
 
 -- Code Actions (Importaciones, implementar interfaces, etc.)
 vim.keymap.set("n", "<M-p>", vim.lsp.buf.code_action, { desc = "LSP Code Action (IntelliJ style)" })

@@ -50,15 +50,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-vim.diagnostic.config {
-  virtual_text = true, -- Muestra el error al final de la línea
-  severity_sort = true,
-  float = {
-    border = "rounded",
-    source = "always", -- Esto te dirá SI EL ERROR ES DE JDTLS O DE SONARLINT
-  },
-}
-
 local dap, dapui = require "dap", require "dapui"
 dap.listeners.after.event_initialized["dapui_config"] = function()
   dapui.open()
