@@ -1,17 +1,56 @@
+
 # Get editor completions based on the config schema
-"$schema" = 'https://starship.rs/config-schema.json'
+#"$schema" = 'https://starship.rs/config-schema.json'
 
-# Inserts a blank line between shell prompts
-add_newline = false
+format = """\
+($directory)\
+$os\
+$git_branch\
+$fill\
+$nodejs\
+$rust\
+$golang\
+$php\
+$bun\
+$java\
+$c\
+$conda\
+$zig\
+$cmd_duration\
+$time\
+\n$character\
+"""
 
-# Formato general del prompt
-format = """
-[╭─](bold green) $directory$git_branch$git_status$java$nodejs$python$rust$package$memory_usage[╰─](bold green) 🤓"""
+add_newline = true
+command_timeout = 3600000
+
+[fill]
+symbol = ' '
+
+[character]
+# El Batman amarillo si todo va bien, rojo si hay error
+success_symbol = "[ 󰭟 ](bold yellow)"
+error_symbol = "[ 󰭟 ](bold red)"
+vimcmd_symbol = "[N](bold red)"
+vimcmd_replace_one_symbol = "[R](bold peach)"
+vimcmd_visual_symbol = "[V](bold mauve)"
 
 [directory]
-truncation_length = 3
-style = "bold blue"
+format = "[$path](bold $style)[$read_only]($read_only_style) "
+truncation_length = 2
+style = "fg:blue"
+read_only_style = "fg:blue"
+before_repo_root_style = "fg:blue"
+truncation_symbol = "…/"
 truncate_to_repo = true
+read_only = "  "
+
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
 
 [time]
 format = "🕙 $time "
@@ -26,13 +65,17 @@ show_always = true
 [cmd_duration]
 format = "took [$duration]($style) "
 style = "bold yellow"
+min_time = 5
 
 [git_branch]
 symbol = "󰊢 "
 style = "bold bright-purple"
-format = "($style)[$symbol]($style)[$branch]($style) "
+format = "-> [$symbol$branch]($style)"
 
-# Muestra la versión de Node.js (indispensable para React/Vue)
+[git_status]
+format = '[$all_status$ahead_behind ]($style)'
+style = "fg:text bg:pink"
+
 [nodejs]
 symbol = " "
 style = "bold green"
@@ -71,7 +114,7 @@ format = "[$symbol]($style)"
 [java]
 symbol = " "
 style = "bg:#06969A fg:#090618"
-format = "[[ $symbol ($version) ]($style)]($style)"
+format = "[[ $symbol ($version) ](fg:red)]($style)"
 
 [azure]
 disabled = false
@@ -92,7 +135,12 @@ style = 'bold red'
 format = 'via [🐋 $context](blue bold)'
 
 [golang]
-format = 'via [🏎💨 $version](bold cyan) '
+format = '[[ 🏎💨 $version ](fg:teal)]($style) '
+
+[bun]
+version_format = "$raw"
+format = '[[ $symbol ($version) ](fg:text)]($style)'
+disabled = false
 
 # ~/.config/starship.toml
 
