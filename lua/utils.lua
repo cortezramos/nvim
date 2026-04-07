@@ -1,7 +1,12 @@
 local M = {}
 
 M.smart_create_file = function()
-  local telescope = require "telescope.builtin"
+  local ok, telescope = pcall(require, "telescope.builtin")
+  if not ok then
+    Snacks.picker.files()
+    return
+  end
+
   local actions = require "telescope.actions"
   local action_state = require "telescope.actions.state"
 

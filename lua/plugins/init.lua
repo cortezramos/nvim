@@ -444,4 +444,53 @@ return {
       },
     },
   },
+
+  {
+    "NStefan002/screenkey.nvim",
+    lazy = false,
+    config = function()
+      require("screenkey").setup {
+        compress_after = 3,
+        clear_after = 3,
+        show_leader = true,
+        group_mappings = true,
+      }
+
+      vim.keymap.set("n", "<leader>sk", "<cmd>Screenkey toggle<cr>", { desc = "Toggle Screenkey" })
+    end,
+  },
+
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = {
+      picker = {
+        win = {
+          input = {
+            keys = {
+              ["<c-j>"] = { "preview_scroll_down", mode = { "n", "i" } },
+              ["<c-k>"] = { "preview_scroll_up", mode = { "n", "i" } },
+            },
+          },
+        },
+      },
+      explorer = { enabled = true },
+      notifier = { enabled = false },
+      dashboard = { enabled = false },
+      scope = { enabled = true },
+      words = { enabled = false },
+      input = { enabled = false },
+      bufdelete = { enabled = false },
+      zen = { enabled = false },
+      scroll = { enabled = false },
+      indent = { enabled = false },
+      image = { enabled = false },
+      lazygit = { enabled = false },
+      git = { enabled = false },
+      statuscolumn = { enabled = false },
+      terminal = { enabled = false },
+      toggle = { enabled = false },
+    },
+  },
 }

@@ -7,12 +7,24 @@ local map = vim.keymap.set
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
+-- Snacks Picker (override NvChad Telescope mappings)
+map("n", "<leader>ff", function() Snacks.picker.files() end, { desc = "Find Files" })
+map("n", "<leader>fg", function() Snacks.picker.grep() end, { desc = "Grep" })
+map("n", "<leader>fb", function() Snacks.picker.buffers() end, { desc = "Buffers" })
+map("n", "<leader>fw", function() Snacks.picker.grep_word() end, { desc = "Grep Word" })
+map("n", "<leader>fr", function() Snacks.picker.recent() end, { desc = "Recent Files" })
+map("n", "<leader>fh", function() Snacks.picker.help() end, { desc = "Help Pages" })
+map("n", "<leader>fk", function() Snacks.picker.keymaps() end, { desc = "Keymaps" })
+map("n", "<leader>fs", function() Snacks.picker.smart() end, { desc = "Smart Find" })
+map("n", "<leader>.", function() Snacks.picker.lines() end, { desc = "Buffer Lines" })
+map("n", "<leader>fp", function() Snacks.picker.projects() end, { desc = "Projects" })
+
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 --
 
 map("n", "<F12>", function()
   local word = vim.fn.expand "<cword>"
-  require("telescope.builtin").live_grep { default_text = word }
+  Snacks.picker.grep { current_word = word }
 end, { desc = "Buscar implementación por texto" })
 
 map("n", "<leader>x", function()
