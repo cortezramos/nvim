@@ -2,20 +2,49 @@ require "nvchad.autocmds"
 
 local autocmd = vim.api.nvim_create_autocmd
 
--- Evento al cerrar buffers: si no quedan archivos, abre el Dash
-autocmd("BufDelete", {
-  callback = function()
-    vim.schedule(function()
-      local bufs = vim.fn.getbufinfo { buflisted = 1 }
-      if #bufs == 0 then
-        local status, nt_api = pcall(require, "nvim-tree.api")
-        if status then
-          nt_api.tree.open()
-        end
-      end
-    end)
+local nvim_config = vim.fn.stdpath "config"
+
+-- Función para limpiar un buffer de vim.t.bufs
+local function remove_from_tabufline(bufnr)
+  local bufs = vim.t.bufs or {}
+  for i, nr in ipairs(bufs) do
+    if nr == bufnr then
+      table.remove(bufs, i)
+      vim.t.bufs = bufs
+      return
+    end
+  end
+end
+
+-- Oil: quitar su buffer de la tabufline
+autocmd("FileType", {
+  pattern = "oil",
+  callback = function(ev)
+    vim.bo[ev.buf].buflisted = false
+    remove_from_tabufline(ev.buf)
+    vim.opt_local.winblend = 0
   end,
 })
+
+-- Ocultar de tabufline archivos internos de nvim (ftplugin, configs)
+-- Solo aplica a archivos lua cargados como parte del runtime de nvim,
+-- NO a archivos que el usuario abre intencionalmente con :e o desde oil
+autocmd("BufAdd", {
+  callback = function(ev)
+    local name = vim.api.nvim_buf_get_name(ev.buf)
+    -- Solo excluir si viene del config de nvim Y no fue abierto por el usuario
+    -- (los archivos abiertos por el usuario tienen ventana asociada)
+    if name:find(nvim_config, 1, true) then
+      local wins = vim.fn.win_findbuf(ev.buf)
+      if #wins == 0 then
+        vim.bo[ev.buf].buflisted = false
+        remove_from_tabufline(ev.buf)
+      end
+    end
+  end,
+})
+
+-- (oil maneja la navegación, no hace falta abrir nada automáticamente al borrar buffers)
 
 autocmd("TermClose", {
   callback = function(ctx)

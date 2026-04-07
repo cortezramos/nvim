@@ -20,7 +20,6 @@ return {
     },
   },
 
-  -- These are some examples, uncomment them if you want to see them work!
   {
     "neovim/nvim-lspconfig",
     config = function()
@@ -49,9 +48,9 @@ return {
           local modified = vim.api.nvim_buf_get_option(props.buf, "modified")
 
           return {
-            { " ", guifg = "#3b4261" }, -- Borde izquierdo redondeado
+            { " ", guifg = "#3b4261" },
             {
-              { " " .. (icon or "") .. " ", guifg = color, guibg = "#3b4261" },
+              { " " .. (icon or "") .. " ", guifg = color, guibg = "#3b4261" },
               {
                 filename .. " ",
                 gui = modified and "bold,italic" or "bold",
@@ -59,7 +58,7 @@ return {
                 guibg = "#3b4261",
               },
             },
-            { " ", guifg = "#3b4261" }, -- Borde derecho redondeado
+            { " ", guifg = "#3b4261" },
           }
         end,
       }
@@ -70,15 +69,12 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
     ft = { "markdown" },
     opts = {
-      -- Aquí puedes personalizar si quieres ver los códigos de color,
-      -- círculos para las listas, etc.
       code = {
         sign = false,
         width = "block",
         right_pad = 1,
       },
       heading = {
-        -- Esto hace que los títulos se vean con colores e iconos
         icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
       },
     },
@@ -93,13 +89,11 @@ return {
           "treesitter",
           "regex",
         },
-        delay = 100, -- Qué tan rápido resalta (en ms)
-        under_cursor = true, -- También resalta la que tienes debajo
+        delay = 100,
+        under_cursor = true,
         large_file_cutoff = 2000,
       }
 
-      -- OPCIONAL: Cambia el color del resaltado para que sea muy obvio
-      -- Esto hará que el fondo de las variables sea un poco más claro
       vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = "#3b4252", fg = "#ffdd33", underline = true, bold = true })
       vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#3b4252", fg = "#ffdd33", underline = true, bold = true })
       vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = "#444b5a", fg = "#ffdd33", underline = true, bold = true })
@@ -113,20 +107,20 @@ return {
       require("copilot").setup {
         suggestion = {
           enabled = true,
-          auto_trigger = true, -- Sugiere código automáticamente mientras escribes
-          debounce = 75, -- TIempo en milisegundospara mostrar una sugerencia
+          auto_trigger = true,
+          debounce = 75,
           keymap = {
-            accept = "<M-l>", -- Presiona Alt + L para aceptar la sugerencia
-            accept_word = false, -- No aceptar solo la palabra sugerida
-            accept_line = false, -- No aceptar toda la linea sugerida
-            next = "<M-]>", -- Alt + ] para la siguiente sugerencia
-            prev = "<M-[>", -- Alt + [ para la anterior
-            dismiss = "<C-]>", -- Ctrl + ] para cerrar la sugerencia
+            accept = "<M-l>",
+            accept_word = false,
+            accept_line = false,
+            next = "<M-]>",
+            prev = "<M-[>",
+            dismiss = "<C-]>",
           },
         },
-        panel = { enabled = false }, -- Desactivado para no estorbar el flujo de NvChad
+        panel = { enabled = false },
         filetypes = {
-          markdown = true, -- Habilitar Copilot en archivos markdown,
+          markdown = true,
           help = false,
           gitcommit = false,
           gitrebase = false,
@@ -142,8 +136,7 @@ return {
     "sphamba/smear-cursor.nvim",
     event = "VeryLazy",
     opts = {
-      -- Ajusta la suavidad del efecto aquí
-      cursor_color = "#e0af68", -- Color llamativo
+      cursor_color = "#e0af68",
       stiffness = 0.6,
       trailing_stiffness = 0.3,
       distance_stop_animating = 0.1,
@@ -157,13 +150,13 @@ return {
         enable = true,
         autoresize = {
           enable = true,
-          width = 120, -- Ancho del panel activo (ajústalo a tu gusto)
-          min_width = 40, -- Ancho mínimo para paneles inactivos
+          width = 120,
+          min_width = 40,
         },
-        excluded_filetypes = { "nvdash", "TelescopePrompt", "NvimTree", "toggleterm", "notify" },
+        excluded_filetypes = { "nvdash", "TelescopePrompt", "NvimTree", "oil", "toggleterm", "notify" },
         excluded_buftypes = { "nofile", "prompt", "popup", "terminal" },
         ui = {
-          signcolumn = true, -- Limpia la columna de la izquierda en paneles inactivos
+          signcolumn = true,
         },
       }
     end,
@@ -174,34 +167,45 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     keys = { { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" } },
   },
+
+  -- NvimTree: desactivar hijack para que oil sea el explorador por defecto.
+  -- Usamos opts como función para hacer merge con la base de NvChad
+  -- y sobreescribir solo las claves que necesitamos.
   {
     "nvim-tree/nvim-tree.lua",
-    opts = {
-      filters = {
-        dotfiles = true, -- Oculta los archivos ocultos (dotfiles)
-      },
-      sync_root_with_cwd = true, -- Sincroniza la raíz del árbol con el directorio de trabajo actual
-      respect_buf_cwd = true, -- Respeta el directorio de trabajo del buffer
-      -- Aquí van tus configuraciones existentes...
-      update_focused_file = {
-        enable = true,
-        update_root = true,
-      },
-      view = {
-        side = "left",
-        width = 30,
-      },
-      actions = {
-        open_file = {
-          quit_on_open = true, -- ESTA ES LA CLAVE: cierra el árbol al abrir un archivo
-          resize_window = true,
+    opts = function()
+      local base = require "nvchad.configs.nvimtree"
+      return vim.tbl_deep_extend("force", base, {
+        disable_netrw = false,
+        hijack_netrw = false,
+        hijack_directories = {
+          enable = false,
+          auto_open = false,
         },
-      },
-    },
+        filters = { dotfiles = false },
+        sync_root_with_cwd = true,
+        respect_buf_cwd = true,
+        update_focused_file = {
+          enable = true,
+          update_root = true,
+        },
+        view = {
+          side = "left",
+          width = 30,
+        },
+        actions = {
+          open_file = {
+            quit_on_open = true,
+            resize_window = true,
+          },
+        },
+      })
+    end,
   },
+
   {
     "folke/persistence.nvim",
-    event = "BufReadPre", -- Se carga solo cuando abres un archivo
+    event = "BufReadPre",
     opts = {
       options = { "buffers", "curdir", "tabpages", "winsize", "skiprtp" },
     },
@@ -226,14 +230,13 @@ return {
           background_colour = "#000000",
           fps = 30,
           render = "default",
-          stages = "fade", -- Animación suave
+          stages = "fade",
           timeout = 2000,
         },
       },
     },
     event = "VeryLazy",
     opts = {
-      -- Aquí puedes configurar qué tan agresivo quieres el cambio visual
       lsp = {
         override = {
           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -242,11 +245,11 @@ return {
         },
       },
       presets = {
-        bottom_search = true, -- El buscador abajo, pero moderno
-        command_palette = true, -- ¡ESTO! Hace que los comandos floten al centro
+        bottom_search = true,
+        command_palette = true,
         long_message_to_split = true,
-        inc_rename = false, -- Úsalo si tienes el plugin de rename
-        lsp_doc_border = true, -- Bordes elegantes para docs de funciones
+        inc_rename = false,
+        lsp_doc_border = true,
       },
     },
   },
@@ -256,10 +259,9 @@ return {
     version = "*",
     dependencies = {
       "SmiteshP/nvim-navic",
-      "nvim-tree/nvim-web-devicons", -- Para los iconos de Java, Python, etc.
+      "nvim-tree/nvim-web-devicons",
     },
     opts = {
-      -- Puedes dejarlo vacío para el estilo por defecto o personalizarlo
       show_modified = true,
     },
   },
@@ -277,7 +279,6 @@ return {
             vim.fn.stdpath "data" .. "/mason/bin/sonarlint-language-server",
             "-stdio",
             "-analyzers",
-            -- Asegúrate de que este .jar existe en tu carpeta de mason
             vim.fn.stdpath "data"
               .. "/mason/packages/sonarlint-language-server/extension/analyzers/sonarqube-java-plugin.jar",
           },
@@ -286,19 +287,16 @@ return {
       }
     end,
   },
-  -- En tu lua/plugins/init.lua, busca donde está luasnip o añádelo:
   {
     "L3MON4D3/LuaSnip",
     config = function()
-      require "nvchad.configs.luasnip" -- Carga la base de NvChad
+      require "nvchad.configs.luasnip"
       local ls = require "luasnip"
       local s = ls.snippet
       local t = ls.text_node
       local i = ls.insert_node
 
-      -- Snippets de Java
       ls.add_snippets("java", {
-        -- jm -> Java Method
         s("jm", {
           t "public ",
           i(1, "void"),
@@ -311,14 +309,12 @@ return {
           i(0),
           t { "", "}" },
         }),
-        -- psv -> Public Static Void Main
         s("psv", {
           t "public static void main(String[] args) {",
           t { "", "\t" },
           i(0),
           t { "", "}" },
         }),
-        -- const -> Constructor
         s("const", {
           t "public ",
           i(1, "ClassName"),
@@ -332,7 +328,6 @@ return {
       })
 
       ls.add_snippets("vue", {
-        -- vref -> Crear una variable reactiva
         s("vref", {
           t "const ",
           i(1, "myVar"),
@@ -340,7 +335,6 @@ return {
           i(2, "null"),
           t ");",
         }),
-        -- vcomp -> Crear una propiedad computada
         s("vcomp", {
           t "const ",
           i(1, "computedVar"),
@@ -349,7 +343,6 @@ return {
           i(0),
           t { "", "});" },
         }),
-        -- vfor -> Estructura de un v-for rápido
         s("vfor", {
           t '<div v-for="',
           i(1, "item"),
@@ -380,16 +373,29 @@ return {
     },
   },
 
-  -- test new blink
-  -- { import = "nvchad.blink.lazyspec" },
-
-  -- {
-  -- 	"nvim-treesitter/nvim-treesitter",
-  -- 	opts = {
-  -- 		ensure_installed = {
-  -- 			"vim", "lua", "vimdoc",
-  --      "html", "css"
-  -- 		},
-  -- 	},
-  -- },
+  {
+    "stevearc/oil.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    lazy = false,
+    opts = {
+      default_file_explorer = true,
+      delete_to_trash = true,
+      skip_confirm_for_simple_edits = true,
+      buf_options = {
+        buflisted = false,
+        bufhidden = "hide",
+      },
+      view_options = {
+        show_hidden = true,
+      },
+      keymaps = {
+        -- Salir de oil y volver al dashboard
+        ["q"] = function()
+          require("oil").close()
+          local ok, nvdash = pcall(require, "nvchad.nvdash")
+          if ok then nvdash.open() end
+        end,
+      },
+    },
+  },
 }

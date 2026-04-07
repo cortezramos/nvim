@@ -16,20 +16,11 @@ map("n", "<F12>", function()
 end, { desc = "Buscar implementación por texto" })
 
 map("n", "<leader>x", function()
-  local bufs = vim.fn.getbufinfo { buflisted = 1 }
-
-  if #bufs <= 1 then
-    local status, nt_api = pcall(require, "nvim-tree.api")
-    if status then
-      nt_api.tree.open()
-      vim.cmd "bwipeout #"
-    else
-      vim.cmd "bwipeout"
-    end
-  else
-    require("nvchad.tabufline").close_buffer()
-  end
-end, { desc = "Cerrar buffer y volver al Dash si es el último" })
+  -- Borrar el buffer actual y siempre ir a oil
+  local cwd = vim.fn.getcwd()
+  vim.cmd "bwipeout"
+  require("oil").open(cwd)
+end, { desc = "Cerrar buffer y abrir oil" })
 
 map("n", "<leader>da", function()
   local status, nvdash = pcall(require, "nvchad.nvdash")
@@ -98,6 +89,26 @@ end, { desc = "Siguiente ocurrencia" })
 vim.keymap.set("n", "[[", function()
   require("illuminate").goto_prev_reference()
 end, { desc = "Anterior ocurrencia" })
+
+-- Oil
+map("n", "-", function()
+  -- Si el buffer actual no tiene path (ej: dashboard), abrir en cwd
+  local buf_path = vim.api.nvim_buf_get_name(0)
+  if buf_path == "" or vim.bo.filetype == "nvdash" then
+    require("oil").open(vim.fn.getcwd())
+  else
+    require("oil").open()
+  end
+end, { desc = "Oil: abrir directorio" })
+
+map("n", "<C-e>", function()
+  local buf_path = vim.api.nvim_buf_get_name(0)
+  if buf_path == "" or vim.bo.filetype == "nvdash" then
+    require("oil").open_float(vim.fn.getcwd())
+  else
+    require("oil").open_float()
+  end
+end, { desc = "Oil: flotante" })
 
 vim.opt.hlsearch = true -- Resaltar búsquedas
 vim.opt.incsearch = true -- Ir resaltando mientras escribes
