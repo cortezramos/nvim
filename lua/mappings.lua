@@ -16,10 +16,13 @@ map("n", "<F12>", function()
 end, { desc = "Buscar implementación por texto" })
 
 map("n", "<leader>x", function()
-  local cwd = vim.fn.getcwd()
+  local buf_path = vim.api.nvim_buf_get_name(0)
+  local dir = (buf_path ~= "" and vim.fn.isdirectory(buf_path) == 0)
+    and vim.fn.fnamemodify(buf_path, ":h")
+    or vim.fn.getcwd()
   vim.cmd "bwipeout"
   vim.schedule(function()
-    require("oil").open(cwd)
+    require("oil").open(dir)
   end)
 end, { desc = "Cerrar buffer y abrir oil" })
 

@@ -374,6 +374,50 @@ return {
   },
 
   {
+    "folke/twilight.nvim",
+    cmd = { "Twilight", "TwilightEnable", "TwilightDisable" },
+    opts = {
+      dimming = {
+        alpha = 0.25,
+        inactive = false,
+      },
+      context = 10,
+      treesitter = true,
+    },
+  },
+
+  {
+    "folke/zen-mode.nvim",
+    cmd = { "ZenMode" },
+    opts = {
+      window = {
+        backdrop = 0.95,
+        width = 0.8,
+        height = 1,
+        options = {
+          number = false,
+          relativenumber = false,
+          foldcolumn = "0",
+          list = false,
+          showbreak = "NONE",
+          signcolumn = "no",
+        },
+      },
+      plugins = {
+        options = {
+          enabled = true,
+          ruler = false,
+          showcmd = false,
+        },
+        twilight = { enabled = true },
+      },
+    },
+    keys = {
+      { "<leader>z", "<cmd>ZenMode<cr>", desc = "Toggle ZenMode" },
+    },
+  },
+
+  {
     "stevearc/oil.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     lazy = false,
@@ -393,7 +437,9 @@ return {
         ["q"] = function()
           require("oil").close()
           local ok, nvdash = pcall(require, "nvchad.nvdash")
-          if ok then nvdash.open() end
+          if ok then
+            nvdash.open()
+          end
         end,
       },
     },
