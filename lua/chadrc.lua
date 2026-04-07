@@ -34,7 +34,7 @@ M.nvdash = {
     "             ECR7               ",
   },
   buttons = {
-    { txt = "🖥️ Menu", keys = "Spc e", cmd = ":NvimTreeToggle" },
+    { txt = "🖥️ Explorar archivos", keys = "-", cmd = "lua vim.schedule(function() require('oil').open(vim.fn.getcwd()) end)" },
     { txt = "  Restore Session", keys = "Spc q s", cmd = "lua require('persistence').load()" },
     { txt = "  Archivos Recientes", keys = "Spc f o", cmd = "Telescope oldfiles" },
     { txt = "󰈚  Nuevo Archivo Codigo", keys = "Spc n", cmd = "lua require('utils').smart_create_file()" },
