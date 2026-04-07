@@ -471,8 +471,66 @@ return {
             keys = {
               ["<c-j>"] = { "preview_scroll_down", mode = { "n", "i" } },
               ["<c-k>"] = { "preview_scroll_up", mode = { "n", "i" } },
+              ["<c-g>"] = { "narrow", mode = { "n", "i" } },
             },
           },
+          list = {
+            keys = {
+              ["<c-g>"] = "narrow",
+            },
+          },
+        },
+        actions = {
+          narrow = function(picker)
+            local items = picker:items()
+            if #items == 0 then
+              return
+            end
+            local current_pattern = picker.input:get()
+            if current_pattern == "" then
+              return
+            end
+
+            local narrow_items = {}
+            for i, item in ipairs(items) do
+              local copy = vim.deepcopy(item)
+              copy.idx = i
+              copy.score = 0
+              copy.positions = nil
+              table.insert(narrow_items, copy)
+            end
+
+            local narrow_prompt = current_pattern .. " > "
+
+            picker:close()
+
+            vim.schedule(function()
+              Snacks.picker({
+                items = narrow_items,
+                prompt = narrow_prompt,
+                format = "file",
+                matcher = {
+                  fuzzy = true,
+                  smartcase = true,
+                  ignorecase = true,
+                  sort_empty = true,
+                  filename_bonus = true,
+                },
+                win = {
+                  input = {
+                    keys = {
+                      ["<c-g>"] = { "narrow", mode = { "n", "i" } },
+                    },
+                  },
+                  list = {
+                    keys = {
+                      ["<c-g>"] = "narrow",
+                    },
+                  },
+                },
+              })
+            end)
+          end,
         },
       },
       explorer = { enabled = true },
