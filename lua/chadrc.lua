@@ -43,7 +43,7 @@ M.nvdash = {
     { txt = "  Find File", keys = "Spc f f", cmd = "Telescope find_files" },
     { txt = "󰈚  New File", keys = "Spc n", cmd = "enew" },
     { txt = "  Recent Files", keys = "Spc f o", cmd = "Telescope oldfiles" },
-    { txt = "󱋒  Solidarity Docs", keys = "Spc h g", cmd = "edit ./../archives/guide.md" },
+    { txt = "󱋒  Solidarity Docs", keys = "Spc h g", cmd = "edit ~/.config/nvim/archives/guide.md" },
     { txt = "󰄉  Check Health", keys = "Spc c h", cmd = "checkhealth" },
   },
 }
