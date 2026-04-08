@@ -8,16 +8,19 @@ map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
 -- Snacks Picker (override NvChad Telescope mappings)
-map("n", "<leader>ff", function() Snacks.picker.files() end, { desc = "Find Files" })
-map("n", "<leader>fg", function() Snacks.picker.grep() end, { desc = "Grep" })
-map("n", "<leader>fb", function() Snacks.picker.buffers() end, { desc = "Buffers" })
-map("n", "<leader>fw", function() Snacks.picker.grep_word() end, { desc = "Grep Word" })
-map("n", "<leader>fr", function() Snacks.picker.recent() end, { desc = "Recent Files" })
-map("n", "<leader>fh", function() Snacks.picker.help() end, { desc = "Help Pages" })
-map("n", "<leader>fk", function() Snacks.picker.keymaps() end, { desc = "Keymaps" })
-map("n", "<leader>fs", function() Snacks.picker.smart() end, { desc = "Smart Find" })
-map("n", "<leader>.", function() Snacks.picker.lines() end, { desc = "Buffer Lines" })
-map("n", "<leader>fp", function() Snacks.picker.projects() end, { desc = "Projects" })
+-- Usamos vim.schedule para asegurar que Snacks esté cargado
+vim.schedule(function()
+  map("n", "<leader>ff", function() Snacks.picker.files() end, { desc = "Find Files" })
+  map("n", "<leader>fg", function() Snacks.picker.grep() end, { desc = "Grep" })
+  map("n", "<leader>fb", function() Snacks.picker.buffers() end, { desc = "Buffers" })
+  map("n", "<leader>fw", function() Snacks.picker.grep() end, { desc = "Grep Word" })
+  map("n", "<leader>fr", function() Snacks.picker.recent() end, { desc = "Recent Files" })
+  map("n", "<leader>fh", function() Snacks.picker.help() end, { desc = "Help Pages" })
+  map("n", "<leader>fk", function() Snacks.picker.keymaps() end, { desc = "Keymaps" })
+  map("n", "<leader>fs", function() Snacks.picker.smart() end, { desc = "Smart Find" })
+  map("n", "<leader>.", function() Snacks.picker.lines() end, { desc = "Buffer Lines" })
+  map("n", "<leader>fp", function() Snacks.picker.projects() end, { desc = "Projects" })
+end)
 
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 --
@@ -131,7 +134,9 @@ map("n", "<C-e>", function()
   end)
 end, { desc = "Oil: flotante" })
 
-vim.opt.hlsearch = true -- Resaltar búsquedas
+map("n", "<leader>tw", function()
+  vim.cmd "Twilight"
+end, { desc = "Twilight: enfocar código" })
 vim.opt.incsearch = true -- Ir resaltando mientras escribes
 -- Atajo para limpiar el resaltado con la tecla Esc
 vim.keymap.set("n", "<Esc>", ":nohlsearch<CR>", { silent = true })
