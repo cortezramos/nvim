@@ -443,6 +443,16 @@ return {
         end,
       },
     },
+    config = function(_, opts)
+      require("oil").setup(opts)
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "oil",
+        callback = function()
+          vim.opt_local.colorcolumn = ""
+          vim.opt_local.signcolumn = "no"
+        end,
+      })
+    end,
   },
 
   {

@@ -16,13 +16,26 @@ local function remove_from_tabufline(bufnr)
   end
 end
 
--- Oil: quitar su buffer de la tabufline
-autocmd("FileType", {
-  pattern = "oil",
-  callback = function(ev)
-    vim.bo[ev.buf].buflisted = false
-    remove_from_tabufline(ev.buf)
-    vim.opt_local.winblend = 0
+-- Oil: mostrar directorio en statusline global al entrar
+autocmd({ "FileType", "BufWinEnter", "WinEnter" }, {
+  callback = function()
+    if vim.bo.filetype ~= "oil" then
+      return
+    end
+    vim.bo.buflisted = false
+    local ok, dir = pcall(require("oil").get_current_dir)
+    if ok and dir then
+      vim.opt.statusline = "  " .. vim.fn.fnamemodify(dir, ":~")
+    end
+  end,
+})
+
+-- Oil: restaurar statusline de NvChad al salir
+autocmd("WinLeave", {
+  callback = function()
+    if vim.bo.filetype == "oil" then
+      vim.opt.statusline = "%!v:lua.require('nvchad.stl.default')()"
+    end
   end,
 })
 
@@ -45,7 +58,6 @@ autocmd("BufAdd", {
 })
 
 -- (oil maneja la navegación, no hace falta abrir nada automáticamente al borrar buffers)
-
 autocmd("TermClose", {
   callback = function(ctx)
     vim.schedule(function()

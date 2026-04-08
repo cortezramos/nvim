@@ -53,4 +53,12 @@ M.smart_create_file = function()
   }
 end
 
+-- Winbar dinámico: oculto en oil, normal en el resto
+M.get_winbar = function()
+  if vim.bo.filetype == "oil" then
+    return ""
+  end
+  return "%f %m %= %l %c"
+end
+
 return M
