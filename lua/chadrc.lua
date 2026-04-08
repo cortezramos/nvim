@@ -34,14 +34,16 @@ M.nvdash = {
     "             ECR7               ",
   },
   buttons = {
-    { txt = "🖥️ Explorar archivos", keys = "-", cmd = "lua vim.schedule(function() require('oil').open(vim.fn.getcwd()) end)" },
-    { txt = "  Restore Session", keys = "Spc q s", cmd = "lua require('persistence').load()" },
+    {
+      txt = "🖥️ Explorar archivos",
+      keys = "-",
+      cmd = "lua vim.schedule(function() require('oil').open(vim.fn.getcwd()) end)",
+    },
     { txt = "  Archivos Recientes", keys = "Spc f o", cmd = "Telescope oldfiles" },
-    { txt = "󰈚  Nuevo Archivo Codigo", keys = "Spc n", cmd = "lua require('utils').smart_create_file()" },
     { txt = "  Find File", keys = "Spc f f", cmd = "Telescope find_files" },
     { txt = "󰈚  New File", keys = "Spc n", cmd = "enew" },
     { txt = "  Recent Files", keys = "Spc f o", cmd = "Telescope oldfiles" },
-    { txt = "󱋒  Solidarity Docs", keys = "Spc h g", cmd = "edit ~/Documents/Projects/ARCHIVES/guide.md" },
+    { txt = "󱋒  Solidarity Docs", keys = "Spc h g", cmd = "edit ./../archives/guide.md" },
     { txt = "󰄉  Check Health", keys = "Spc c h", cmd = "checkhealth" },
   },
 }
