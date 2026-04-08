@@ -16,26 +16,11 @@ local function remove_from_tabufline(bufnr)
   end
 end
 
--- Oil: mostrar directorio en statusline global al entrar
-autocmd({ "FileType", "BufWinEnter", "WinEnter" }, {
+-- Oil: marcar buffer como no listado
+autocmd("FileType", {
+  pattern = "oil",
   callback = function()
-    if vim.bo.filetype ~= "oil" then
-      return
-    end
     vim.bo.buflisted = false
-    local ok, dir = pcall(require("oil").get_current_dir)
-    if ok and dir then
-      vim.opt.statusline = "  " .. vim.fn.fnamemodify(dir, ":~")
-    end
-  end,
-})
-
--- Oil: restaurar statusline de NvChad al salir
-autocmd("WinLeave", {
-  callback = function()
-    if vim.bo.filetype == "oil" then
-      vim.opt.statusline = "%!v:lua.require('nvchad.stl.default')()"
-    end
   end,
 })
 

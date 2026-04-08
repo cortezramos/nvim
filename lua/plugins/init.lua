@@ -561,4 +561,69 @@ return {
       toggle = { enabled = false },
     },
   },
+
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    event = "VeryLazy",
+    config = function()
+      local function get_project_name()
+        return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+      end
+
+      local function get_file_path()
+        local ft = vim.bo.filetype
+        if ft == "oil" then
+          local ok, dir = pcall(require("oil").get_current_dir)
+          if ok and dir then
+            return vim.fn.fnamemodify(dir, ":~:.")
+          end
+          return ""
+        end
+        local path = vim.fn.expand "%:~:."
+        if path == "" then
+          return "[No Name]"
+        end
+        return path
+      end
+
+      require("lualine").setup {
+        options = {
+          theme = "auto",
+          component_separators = { left = "", right = "" },
+          section_separators = { left = "", right = "" },
+          globalstatus = true,
+          disabled_filetypes = { statusline = { "NvimDashboard", "dashboard" } },
+        },
+        sections = {
+          lualine_a = { "mode" },
+          lualine_b = {
+            { get_project_name, icon = "≡" },
+          },
+          lualine_c = {
+            {
+              get_file_path,
+              icon = "❯",
+              color = { fg = "#c0caf5" },
+            },
+          },
+          lualine_x = {
+            { "diagnostics" },
+            { "encoding", cond = function() return vim.bo.fileencoding ~= "utf-8" end },
+            { "filetype", icon_only = true },
+          },
+          lualine_y = { "progress" },
+          lualine_z = { "location" },
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = { "filename" },
+          lualine_x = { "location" },
+          lualine_y = {},
+          lualine_z = {},
+        },
+      }
+    end,
+  },
 }

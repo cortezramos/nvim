@@ -52,6 +52,9 @@ M.ui = {
   tabufline = {
     lazyload = false,
   },
+  statusline = {
+    enabled = false,
+  },
 }
 
 return M
