@@ -49,7 +49,7 @@ Se abre automaticamente al iniciar nvim.
 | `<M-p>` (Alt+P) | Code Actions (alternativo) | Estilo IntelliJ Alt+Enter |
 | `<leader> r n` | Rename | Renombrar simbolo en todo el proyecto |
 | `<leader> o i` | Organize Imports | Limpiar imports de Java |
-| `<leader> f m` | Format | Formatear archivo (Conform + LSP fallback) |
+| `<leader> f m` | Format | Formatear archivo (Conform + LSP fallback) |\n| `<leader> gpi` | Implementation Preview | Ver vista previa de implementación |\n| `<leader> gpd` | Definition Preview | Ver vista previa de definición |\n| `gpD` | Declaration Preview | Vista previa de declaración |\n| `gpy` | Type Definition Preview | Ver tipo de definición en vista previa |
 | `Ctrl + o` | Jump Back | Volver al archivo/posicion anterior |
 | `Ctrl + i` | Jump Forward | Avanzar en el historial de saltos |
 | `]]` | Siguiente ocurrencia | Navegar entre usos del simbolo bajo el cursor (Illuminate) |
@@ -93,7 +93,7 @@ Se abre automaticamente al iniciar nvim.
 | :--- | :--- |
 | `-` | Abrir Oil en el directorio del archivo actual |
 | `Ctrl + e` | Abrir Oil en modo flotante |
-| `q` (dentro de Oil) | Cerrar Oil y volver al Dashboard |
+| `q` (dentro de Oil) | Cerrar Oil y volver al Dashboard |\n| `<Ctrl-e>` | Abrir Oil en modo flotante |
 | `<leader> x` | Cerrar buffer actual y abrir Oil en su directorio |
 | `Enter` | Entrar al directorio / abrir archivo |
 | `-` (dentro de Oil) | Subir al directorio padre |
@@ -209,7 +209,7 @@ Se abre automaticamente al iniciar nvim.
 
 | Atajo | Accion |
 | :--- | :--- |
-| `<leader> g g` | Abrir LazyGit (TUI completo de Git) |
+| `<leader> g g` | Abrir LazyGit (TUI completo de Git) |\n| `<leader> g b` | Toggle Git Blame para mostrar autores por línea |
 
 ---
 
@@ -224,9 +224,7 @@ Las sesiones se guardan automaticamente al cerrar nvim.
 
 ---
 
-## ENFOQUE Y ZEN
-
-| Atajo | Accion |
+## ENFOQUE Y ZEN\n\n| Atajo | Accion |\n| `<leader> t w` | Toggle Twilight para enfocar código actual |
 | :--- | :--- |
 | `<leader> t w` | Toggle Twilight (atenua el codigo fuera del bloque actual) |
 | `<leader> z` | Toggle ZenMode (pantalla limpia, sin distracciones) |
