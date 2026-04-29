@@ -120,6 +120,9 @@ map("n", "<leader>rn", function()
   vim.lsp.buf.rename()
 end, { desc = "Renombrar símbolo" })
 
+-- Git Blame
+map("n", "<leader>gb", "<cmd>BlameToggle<cr>", { desc = "Toggle Git Blame" })
+
 -- Navegar en ocurrencias con Illuminate
 vim.keymap.set("n", "]]", function()
   require("illuminate").goto_next_reference()
