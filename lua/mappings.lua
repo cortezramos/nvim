@@ -160,9 +160,11 @@ vim.opt.incsearch = true -- Ir resaltando mientras escribes
 -- Atajo para limpiar el resaltado con la tecla Esc
 vim.keymap.set("n", "<Esc>", ":nohlsearch<CR>", { silent = true })
 
+-- Goto Preview mappings
+-- Nota: Para Java, los mappings se sobrescriben en lspconfig.lua con funciones personalizadas
 vim.keymap.set(
   "n",
-  "gpd",
+  "<leader>gpd",
   "<cmd>lua require('goto-preview').goto_preview_definition()<CR>",
   { noremap = true, desc = "Goto Definition (Preview)" }
 )
@@ -170,13 +172,13 @@ vim.keymap.set(
   "n",
   "gpD",
   "<cmd>lua require('goto-preview').goto_preview_declaration()<CR>",
-  { noremap = true, desc = "Goto Definition (Preview)" }
+  { noremap = true, desc = "Goto Declaration (Preview)" }
 )
 vim.keymap.set(
   "n",
-  "gpi",
+  "<leader>gpi",
   "<cmd>lua require('goto-preview').goto_preview_implementation()<CR>",
-  { noremap = true, desc = "Goto Definition (Preview)" }
+  { noremap = true, desc = "Goto Implementation (Preview)" }
 )
 vim.keymap.set(
   "n",

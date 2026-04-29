@@ -1,4 +1,6 @@
 return {
+  -- Añadir nvim-lspconfig como dependencia
+  { "neovim/nvim-lspconfig", lazy = false },
   defaults = { lazy = true },
   install = { colorscheme = { "nvchad" } },
 
