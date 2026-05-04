@@ -60,16 +60,25 @@ local on_attach = function(client, bufnr)
   local map = vim.keymap.set
 
   -- Ir a Definición
-  map("n", "gd", [[<cmd>Telescope lsp_definitions<CR>]], { buffer = bufnr, desc = "Java Definition" })
+  map("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "Java: Goto Definition" })
 
-  -- Ir a Implementación (ESTE ES EL QUE TE FALLA)
-  map("n", "gi", [[<cmd>Telescope lsp_implementations<CR>]], { buffer = bufnr, desc = "Java Implementation" })
+  -- Ir a Implementación
+  map("n", "gi", vim.lsp.buf.implementation, { buffer = bufnr, desc = "Java: Goto Implementation" })
 
-  -- Ver Referencias (Muy útil para ver quién usa el método)
-  map("n", "gr", [[<cmd>Telescope lsp_references<CR>]], { buffer = bufnr, desc = "Java References" })
+  -- Preview de Definición (goto-preview)
+  map("n", "<leader>gpd", require("goto-preview").goto_preview_definition, { buffer = bufnr, desc = "Java: Preview Definition" })
 
-  -- Acciones de código (Para importar clases, etc.)
-  map("n", "<leader>ca", "<cmd>Telescope lsp_code_actions<CR>", { buffer = bufnr, desc = "LSP Code Actions" })
+  -- Preview de Implementación (goto-preview)
+  map("n", "<leader>gpi", require("goto-preview").goto_preview_implementation, { buffer = bufnr, desc = "Java: Preview Implementation" })
+
+  -- Cerrar todos los previews
+  map("n", "<leader>gpc", require("goto-preview").close_all_win, { buffer = bufnr, desc = "Java: Close Preview Windows" })
+
+  -- Ver Referencias
+  map("n", "gr", [[<cmd>Telescope lsp_references<CR>]], { buffer = bufnr, desc = "Java: References" })
+
+  -- Acciones de código
+  map("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "LSP Code Actions" })
 
   -- Organizar Imports automáticamente (Opcional pero recomendado)
   map(
@@ -79,9 +88,6 @@ local on_attach = function(client, bufnr)
     { buffer = bufnr, desc = "Organize Imports" }
   )
 
-  -- Log para debugging (opcional, puedes comentarlo después)
-  print(string.format("JDTLS attached | documentHighlight: %s", 
-    tostring(client.server_capabilities.documentHighlightProvider)))
 end
 
 config.on_attach = on_attach
