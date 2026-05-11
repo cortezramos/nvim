@@ -4,6 +4,10 @@ vim.g.lspconfig_silent_deprecation = true
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
+-- Numeros relativos
+vim.opt.relativenumber = true
+vim.opt.number = true
+
 -- Deshabilitar netrw ANTES de cargar plugins, para que oil.nvim sea el explorador por defecto
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
