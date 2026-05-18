@@ -1,0 +1,26 @@
+##en consola correr
+
+echo '<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.sketchybar.wake</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/brew</string>
+        <string>services</string>
+        <string>restart</string>
+        <string>sketchybar</string>
+    </array>
+    <key>LaunchEvents</key>
+    <dict>
+        <key>com.apple.system.wake</key>
+        <true/>
+    </dict>
+</dict>
+</plist>' > ~/Library/LaunchAgents/com.sketchybar.wake.plist
+
+Y luego:
+
+launchctl load -w ~/Library/LaunchAgents/com.sketchybar.wake.plist
