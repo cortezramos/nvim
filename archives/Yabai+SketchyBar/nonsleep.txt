@@ -24,3 +24,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 Y luego:
 
 launchctl load -w ~/Library/LaunchAgents/com.sketchybar.wake.plist
+
+# Para flotar spotify y finder
+yabai -m rule --add app="Finder" manage=off
+yabai -m rule --add app="Spotify" manage=off
