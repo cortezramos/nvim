@@ -28,3 +28,5 @@ launchctl load -w ~/Library/LaunchAgents/com.sketchybar.wake.plist
 # Para flotar spotify y finder
 yabai -m rule --add app="Finder" manage=off
 yabai -m rule --add app="Spotify" manage=off
+yabai -m config focus_follows_mouse autofocus
+yabai -m config mouse_follows_focus on

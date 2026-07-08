@@ -1,5 +1,12 @@
 return {
   {
+    "fatih/vim-go",
+    ft = "go",
+    build = function()
+      vim.cmd("GoInstallBinaries")
+    end,
+  },
+  {
     "FabijanZulj/blame.nvim",
     lazy = false,
     config = function()
@@ -574,7 +581,11 @@ return {
                 },
               })
             end)
-          end,
+      -- Navegar entre buffers de resultados
+      vim.keymap.set("n", "<leader>rh", "<cmd>bprev<CR>", { desc = "Previous DB result" })
+      vim.keymap.set("n", "<leader>rl", "<cmd>bnext<CR>", { desc = "Next DB result" })
+      vim.keymap.set("n", "<leader>ra", "<cmd>ls<CR>", { desc = "List DB buffers" })
+    end,
         },
       },
       explorer = { enabled = true },
@@ -594,6 +605,58 @@ return {
       terminal = { enabled = false },
       toggle = { enabled = false },
     },
+  },
+
+  {
+    "tpope/vim-dadbod",
+    lazy = true,
+  },
+  {
+    "kristijanhusak/vim-dadbod-ui",
+    dependencies = { "tpope/vim-dadbod" },
+    cmd = { "DBUI", "DBUIToggle", "DBUIAddConnection", "DBUIFindBuffer" },
+    keys = {
+      { "<leader>db", "<cmd>DBUIToggle<CR>", desc = "Toggle DB UI" },
+      { "<leader>dbr", "<cmd>DB<CR>", desc = "Run SQL query" },
+      { "<leader>dbn", "<cmd>DBNew<CR>", desc = "New SQL buffer" },
+      { "<leader>dbc", "<cmd>DB<Space>", desc = "Change DB connection" },
+    },
+    config = function()
+      vim.g.dadbod_ui_hide_table_column_headers = false
+      vim.g.dadbod_ui_auto_open = 0
+
+      -- Ejecutar todo el buffer
+      vim.keymap.set("n", "<leader>r", function()
+        vim.cmd("update")
+        vim.cmd("DB")
+      end, { desc = "Run full buffer" })
+
+      -- Ejecutar selección
+      vim.keymap.set("v", "<leader>r", "<cmd>'<,'>DB<CR>", { desc = "Run selection" })
+
+      -- Ejecutar línea actual
+      vim.keymap.set("n", "<leader>rx", function()
+        vim.cmd(".,.DB")
+      end, { desc = "Run current line" })
+
+      -- Navegar entre buffers de resultados
+      vim.keymap.set("n", "<leader>rh", "<cmd>bprev<CR>", { desc = "Previous DB result" })
+      vim.keymap.set("n", "<leader>rl", "<cmd>bnext<CR>", { desc = "Next DB result" })
+      vim.keymap.set("n", "<leader>ra", "<cmd>ls<CR>", { desc = "List DB buffers" })
+    end,
+  },
+  {
+    "kristijanhusak/vim-dadbod-completion",
+    dependencies = { "tpope/vim-dadbod", "hrsh7th/nvim-cmp" },
+    ft = { "sql" },
+    config = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "sql", "mysql", "plsql" },
+        callback = function()
+          vim.cmd("silent! cmp setup { sources = { { name = 'vim-dadbod-completion' } } }")
+        end,
+      })
+    end,
   },
 
   {

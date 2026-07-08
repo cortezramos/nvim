@@ -2,7 +2,7 @@ local lspconfig = require "lspconfig"
 local nvlsp = require "nvchad.configs.lspconfig"
 
 -- 1. Servidores que NO necesitan configuración especial
-local servers = { "html", "cssls", "tailwindcss" }
+local servers = { "html", "cssls", "tailwindcss", "gopls" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {

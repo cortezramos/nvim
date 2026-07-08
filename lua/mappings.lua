@@ -40,6 +40,12 @@ vim.schedule(function()
   map("n", "<leader>fp", function()
     Snacks.picker.projects()
   end, { desc = "Projects" })
+
+  map({ "n", "t" }, "<leader>i", function()
+    require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
+  end, { desc = "terminal toggle floating term" })
+
+  map({ "n", "t" }, "<A-i>", "<nop>", { desc = "disable alt i" })
 end)
 
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
@@ -108,7 +114,7 @@ map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Mover bloque arriba" })
 -- Code Actions (Importaciones, implementar interfaces, etc.)
 vim.keymap.set("n", "<M-p>", vim.lsp.buf.code_action, { desc = "LSP Code Action (IntelliJ style)" })
 -- Poner punto de quiebre (Toggle Breakpoint)
-map("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", { desc = "Poner punto de quiebre" })
+map("n", "<leader>dbg", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", { desc = "Poner punto de quiebre" })
 -- Abrir la interfaz de variables
 map("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", { desc = "Ver variables" })
 -- 3. Los "pasos" de debug (como en IntelliJ)
