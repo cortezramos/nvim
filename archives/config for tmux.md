@@ -1,0 +1,1 @@
+tmux reset y carpeta de scripts en ~/.config/tmux
